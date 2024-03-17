@@ -119,7 +119,7 @@
 @endsection
 
 @section('content')
-    <form method="POST" enctype="multipart/form-data" action="{{ route('retail_sale_order_create') }}" id="sale_form">
+    <form method="POST" enctype="multipart/form-data" action="{{ route('whole_sale_order_create') }}" id="sale_form">
         @csrf
         <input type="hidden" name="invoice_type" value="2">
         <div class="row">
@@ -155,7 +155,7 @@
                             <div class="card-header with-border" style="background-color: #143257;">
                                 <h3 class="card-title">Product List</h3>
                             </div>
-                            <div class="card-body" style="min-height: 100px;border: 1px solid #000;margin-bottom: 0px;background-color: #beb5b5;">
+                            <div class="card-body" style="min-height: 187px;border: 1px solid #000;margin-bottom: 0px;background-color: #beb5b5;">
                                 <div class="row product_suggestion_container_with_company" style="margin-top: 5px;">
 
                                 </div>
@@ -174,7 +174,7 @@
                                 </div>
                             </div>
 
-                            <div class="card-body" style="min-height: 100px;border: 1px solid #000;margin-bottom: 0px;background-color: #beb5b5;">
+                            <div class="card-body" style="min-height: 111px;border: 1px solid #000;margin-bottom: 0px;background-color: #beb5b5;">
                                 <div class="row product_suggestion_container" style="margin-top: 5px;">
 
                                 </div>
@@ -349,17 +349,17 @@
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered table-striped products_table" style="width: 100% !important;">
+                                    <table class="table table-bordered table-striped products_table" style="width: 100% !important;min-height: 200px;">
                                         <thead>
                                         <tr>
-                                            <th>Model</th>
-                                            <th>Size</th>
-                                            <th>Warehouse</th>
-                                            <th>Stock</th>
-                                            <th>Quantity</th>
-                                            <th style="white-space:nowrap">Unit Price</th>
-                                            <th style="white-space:nowrap">Total Cost</th>
-                                            <th></th>
+                                            <th style="width: 15%;">Model</th>
+                                            <th style="width: 15%;">Size</th>
+                                            <th style="width: 15%;">Warehouse</th>
+                                            <th style="width: 15%;">Stock</th>
+                                            <th style="width: 15%;">Quantity</th>
+                                            <th style="white-space:nowrap;width: 10%;">Unit Price</th>
+                                            <th style="white-space:nowrap;width: 10%;">Total Cost</th>
+                                            <th style="width: 5%;"></th>
                                         </tr>
                                         </thead>
 
@@ -543,50 +543,6 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-7 offset-5">
-                <div class="card" style="background-color: #1455a7;">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>Order NO.</th>
-                                        <th>Customer Name</th>
-                                        {{--                                        <th>Branch</th>--}}
-                                        <th>Customer Address</th>
-                                        <th>Order Date</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="customerPreviousOrder">
-                                    @foreach($sale_orders as $sale_order)
-                                        <tr>
-                                            <td>{{ $sale_order->order_no }}</td>
-                                            <td>{{ $sale_order->customer->name??'' }}</td>
-                                            {{--                                            <td>{{ $sale_order->companyBranch->name??'' }}</td>--}}
-                                            <td>{{ $sale_order->customer->address??'' }}</td>
-                                            <td>{{ date('m-d-Y',strtotime($sale_order->date)) }}</td>
-                                            <td>
-                                                <a href="{{ route('sale_receipt.details', ['order' => $sale_order->id]) }}" target="_blank" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
-                                                @php
-                                                    $latestOrder = \App\Model\SalesOrder::where('customer_id', $sale_order->customer_id)->latest('id')->first();
-                                                @endphp
-                                                @if ($sale_order->id === $latestOrder->id)
-                                                    <a href="{{route('sale_receipt.edit', ['order' => $sale_order->id])}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </form>
 
     <template id="template-product">
@@ -763,7 +719,7 @@
 
                 $.ajax({
                     method: "Post",
-                    url: "{{ route('add_ajax_customer') }}",
+                    url: "{{ route('add_ajax_customer',['type'=>'whole_sale']) }}",
                     data: formData,
                     processData: false,
                     contentType: false,

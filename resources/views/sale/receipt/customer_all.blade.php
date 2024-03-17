@@ -41,7 +41,7 @@
                                 <th>Return Amount</th>
                                 <th>Discount</th>
                                 <th>Transport Cost</th>
-                                <th>Sale Adjustment</th>
+{{--                                <th>Sale Adjustment</th>--}}
                                 <th>Paid</th>
                                 <th>Due</th>
                                 <th>Action</th>
@@ -118,7 +118,7 @@
                     {data: 'return_amount', name: 'return_amount'},
                     {data: 'discount', name: 'discount'},
                     {data: 'transport_cost', name: 'transport_cost'},
-                    {data: 'sale_adjustment', name: 'sale_adjustment'},
+                    // {data: 'sale_adjustment', name: 'sale_adjustment'},
                     {data: 'paid', name: 'paid'},
                     {data: 'due', name: 'due'},
                     // {data: 'status', name: 'status'},

@@ -26,38 +26,38 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body" style="background-color: #143257;">
-                    <form enctype="multipart/form-data" action="{{ route('purchase_import') }}" class="form-horizontal" method="post" style="padding-top: 10px;border-radius: 5px;">
-                        @csrf
-                        <div class="card-body">
-                            <div class=" row {{ $errors->has('excel_file') ? 'has-error' :'' }}">
-                                <label for="excel_file" style="color: #fff;" class="col-sm-2">Purchase Excel File <span class="text-danger">*</span></label>
-                                <div class="col-sm-7">
-                                    <input type="file" style="padding: 0px .75rem !important;width: 50% !important;" name="excel_file" class="form-control" id="excel_file">
-                                    @error('excel_file')
-                                    <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="col-sm-3">
-                                    <a class="btn btn-danger" href="{{ asset('excel/purchase-order.xlsx') }}">
-                                        <i class="fas fa-cloud-download-alt"></i>
-                                        Download Demo Excel
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Import</button>
-                        </div>
-                        <!-- /.card-footer -->
-                    </form>
-                    <hr>
-                </div>
-            </div>
-        </div>
+{{--        <div class="col-md-12">--}}
+{{--            <div class="card">--}}
+{{--                <div class="card-body" style="background-color: #143257;">--}}
+{{--                    <form enctype="multipart/form-data" action="{{ route('purchase_import') }}" class="form-horizontal" method="post" style="padding-top: 10px;border-radius: 5px;">--}}
+{{--                        @csrf--}}
+{{--                        <div class="card-body">--}}
+{{--                            <div class=" row {{ $errors->has('excel_file') ? 'has-error' :'' }}">--}}
+{{--                                <label for="excel_file" style="color: #fff;" class="col-sm-2">Purchase Excel File <span class="text-danger">*</span></label>--}}
+{{--                                <div class="col-sm-7">--}}
+{{--                                    <input type="file" style="padding: 0px .75rem !important;width: 50% !important;" name="excel_file" class="form-control" id="excel_file">--}}
+{{--                                    @error('excel_file')--}}
+{{--                                    <span class="text-danger">{{ $message }}</span>--}}
+{{--                                    @enderror--}}
+{{--                                </div>--}}
+{{--                                <div class="col-sm-3">--}}
+{{--                                    <a class="btn btn-danger" href="{{ asset('excel/purchase-order.xlsx') }}">--}}
+{{--                                        <i class="fas fa-cloud-download-alt"></i>--}}
+{{--                                        Download Demo Excel--}}
+{{--                                    </a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <!-- /.card-body -->--}}
+{{--                        <div class="card-footer">--}}
+{{--                            <button type="submit" class="btn btn-primary">Import</button>--}}
+{{--                        </div>--}}
+{{--                        <!-- /.card-footer -->--}}
+{{--                    </form>--}}
+{{--                    <hr>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
         <div class="col-md-12">
             <div class="card" style="background-color: #143257;">
                 <div class="card-header with-border">

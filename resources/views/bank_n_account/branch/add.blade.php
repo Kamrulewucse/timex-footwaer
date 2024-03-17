@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Branch Add
+ব্রাঞ্চ যুক্ত করুন
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header with-border">
-                    <h3 class="card-title">Branch Information</h3>
+                    <h3 class="card-title">ব্রাঞ্চ তথ্য</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
@@ -18,11 +18,11 @@
 
                     <div class="card-body">
                         <div class="form-group row {{ $errors->has('bank') ? 'has-error' :'' }}">
-                            <label class="col-sm-2 col-form-label">Bank *</label>
+                            <label class="col-sm-2 col-form-label">ব্যাংক *</label>
 
                             <div class="col-sm-10">
                                 <select class="form-control select2" name="bank">
-                                    <option value="">Select Bank</option>
+                                    <option value="">সিলেক্ট ব্যাংক</option>
 
                                     @foreach($banks as $bank)
                                         <option value="{{ $bank->id }}" {{ old('bank') == $bank->id ? 'selected' : '' }}>{{ $bank->name }}</option>
@@ -36,7 +36,7 @@
                         </div>
 
                         <div class="form-group row {{ $errors->has('name') ? 'has-error' :'' }}">
-                            <label class="col-sm-2 col-form-label">Name *</label>
+                            <label class="col-sm-2 col-form-label">নাম *</label>
 
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" placeholder="Enter Name"
@@ -49,21 +49,21 @@
                         </div>
 
                         <div class="form-group row {{ $errors->has('status') ? 'has-error' :'' }}">
-                            <label class="col-sm-2 col-form-label">Status *</label>
+                            <label class="col-sm-2 col-form-label">স্ট্যাটাস *</label>
 
                             <div class="col-sm-10">
 
                                 <div class="radio" style="display: inline">
                                     <label>
                                         <input type="radio" name="status" value="1" {{ old('status') == '1' ? 'checked' : '' }}>
-                                        Active
+                                        সক্রিয়
                                     </label>
                                 </div>
 
                                 <div class="radio" style="display: inline">
                                     <label>
                                         <input type="radio" name="status" value="0" {{ old('status') == '0' ? 'checked' : '' }}>
-                                        Inactive
+                                        নিষ্ক্রিয়
                                     </label>
                                 </div>
 
@@ -76,7 +76,7 @@
                     <!-- /.box-body -->
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary">সেভ</button>
                     </div>
                 </form>
             </div>

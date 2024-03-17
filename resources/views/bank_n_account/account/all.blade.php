@@ -6,7 +6,7 @@
 @endsection
 
 @section('title')
-    Bank Account
+ব্যাংক একাউন্ট
 @endsection
 
 @section('content')
@@ -21,23 +21,23 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <a class="btn btn-primary" href="{{ route('bank_account.add') }}">Add Bank Account</a>
+                    <a class="btn btn-primary" href="{{ route('bank_account.add') }}">ব্যাংক একাউন্ট যুক্ত করুন</a>
 
                     <hr>
                     <div class="table-responsive">
                     <table id="table" class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>S/L</th>
-                            <th>Account Name</th>
-                            <th>Account No.</th>
-                            <th>Bank</th>
-                            <th>Branch</th>
-                            <th>Description</th>
-                            <th>Opening Balance</th>
-                            <th>Balance</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>সিরিয়াল</th>
+                            <th>একাউন্ট নাম</th>
+                            <th>একাউন্ট নং</th>
+                            <th>ব্যাংক</th>
+                            <th>ব্রাঞ্চ</th>
+                            <th>একাউন্ট বর্ণনা</th>
+                            <th>ওপেনিং ব্যালান্স</th>
+                            <th>ব্যালান্স</th>
+                            <th>স্ট্যাটাস</th>
+                            <th>একশন</th>
                         </tr>
                         </thead>
 
@@ -54,16 +54,16 @@
                                 <td>Tk {{ number_format($account->balance, 2) }}</td>
                                 <td>
                                     @if ($account->status == 1)
-                                        <span class="badge badge-success">Active</span>
+                                        <span class="badge badge-success">সক্রিয়</span>
                                     @else
-                                        <span class="badge badge-danger">Inactive</span>
+                                        <span class="badge badge-danger">নিষ্ক্রিয়</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <a class="btn btn-info btn-sm" href="{{ route('bank_account.edit', ['account' => $account->id]) }}">Edit</a>
+                                    <a class="btn btn-info btn-sm" href="{{ route('bank_account.edit', ['account' => $account->id]) }}">এডিট</a>
                                     &nbsp;
                                     @if(auth()->user()->role==0)
-                                    <a role="button" data-id="{{$account->id}}" class="btn btn-warning btn-sm btn-withdraw">Withdraw</a>
+                                    <a role="button" data-id="{{$account->id}}" class="btn btn-warning btn-sm btn-withdraw">উইথড্র</a>
                                     @endif
                                 </td>
                             </tr>
@@ -79,7 +79,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Withdraw Information</h4>
+                <h4 class="modal-title">উইথড্র তথ্য</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
 
@@ -89,12 +89,12 @@
                     <input type="hidden" name="id" id="id">
 
                     <div class="form-group row">
-                        <label>Withdraw Amount</label>
+                        <label>উইথড্র পরিমাণ</label>
                         <input class="form-control" name="amount" placeholder="Enter Amount" id="amount">
                     </div>
 
                     <div class="form-group row">
-                        <label>Note</label>
+                        <label>নোট</label>
                         <input class="form-control" name="note" placeholder="Enter Note" id="note">
                     </div>
                     <div class="form-group row">
@@ -110,8 +110,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="modal-btn-withdraw">Save</button>
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">বন্ধ</button>
+                <button type="button" class="btn btn-primary" id="modal-btn-withdraw">সেভ</button>
             </div>
         </div>
         <!-- /.modal-content -->

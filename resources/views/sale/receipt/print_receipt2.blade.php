@@ -200,6 +200,98 @@
                 </td>
             </tr>
         @endforeach
+{{--        <tr>--}}
+{{--            <td style="">আজকের বিল</td>--}}
+{{--            <td style="">{{ enNumberToBn(number_format($subTotal,2)) }}</td>--}}
+{{--            <td style="" rowspan="3">মোট জোড়া</td>--}}
+{{--            <td style="" rowspan="3">{{ enNumberToBn($totalQuantity) }}</td>--}}
+{{--            <th>সর্বমোট</th>--}}
+{{--            <th>{{ enNumberToBn(number_format($subTotal,2)) }}</th>--}}
+{{--        </tr>--}}
+{{--        <tr>--}}
+{{--            <td style="">নগদ প্রদান</td>--}}
+{{--            <td style="">{{ enNumberToBn(number_format($order->paid,2)) }}</td>--}}
+{{--            <td>কমিশন</td>--}}
+{{--            <td>{{ enNumberToBn(number_format($order->discount,2)) }}</td>--}}
+{{--        </tr>--}}
+{{--        <tr>--}}
+{{--            <th style="">পূর্বের বকেয়া</th>--}}
+{{--            <th style="">{{ enNumberToBn(number_format($order->previous_due,2)) }}</th>--}}
+{{--            <td>পরিবহন</td>--}}
+{{--            <td>{{ enNumberToBn(number_format($order->transport_cost,2)) }}</td>--}}
+{{--        </tr>--}}
+{{--        <tr>--}}
+{{--            <th style="">মোট বকেয়া</th>--}}
+{{--            <th style="">{{ enNumberToBn(number_format($order->current_due,2)) }}</th>--}}
+{{--            <td></td>--}}
+{{--            <td></td>--}}
+{{--            <td>নিট মূল্য</td>--}}
+{{--            <td>{{ enNumberToBn(number_format($total,2)) }}</td>--}}
+{{--        </tr>--}}
+    </table>
+@endif
+
+@php
+    $totalQuantity = 0;
+@endphp
+
+@if(count($order->products) > 0)
+    <br>
+    <table class="table table-bordered product-table pt-4" style="margin-top: 5px; margin-bottom: 1px !important; font-size: 12px;">
+{{--        <thead>--}}
+{{--        <tr>--}}
+{{--            <th class="text-center" style="border: 1px solid black !important;">ক্রম</th>--}}
+{{--            <th colspan="2" style="border: 1px solid black !important;"> পণ্যের বিবরণ</th>--}}
+{{--            <th style="border: 1px solid black !important;"> জোড়া </th>--}}
+{{--            <th class="text-right" style="border: 1px solid black !important;">দাম</th>--}}
+{{--            <th class="text-right" style="border: 1px solid black !important;">বিক্রয় মূল্য</th>--}}
+{{--        </tr>--}}
+{{--        </thead>--}}
+        <?php
+        $subTotal = 0;
+        $total = 0;
+        $totalAmount = 0;
+        ?>
+{{--        <tbody>--}}
+        @foreach($order->products as $key => $item)
+            @php
+                $totalQuantity += $item->quantity;
+                 if(auth()->user()->role == 2){
+                        $subTotal  += ($item->buy_price) * $item->quantity;
+                        $total += (($item->buy_price) * $item->quantity) + $order->transport_cost + $order->vat - $order->discount - $order->return_amount;
+                        $totalAmount = ((($item->buy_price) * $item->quantity) + $order->transport_cost + $order->vat - $order->discount - $order->return_amount) + $order->paid;
+
+                 } else{
+                       $subTotal = $order->sub_total;
+                       $total = $order->total;
+                       $totalAmount = $order->current_due + $order->paid;
+                   }
+
+            @endphp
+{{--            <tr class="{{ $key==26?'pagebreak':'' }}">--}}
+{{--                <td class="text-center" style="border-radius: 10px 0px 10px 10px !important;">{{ enNumberToBn($key+1) }}</td>--}}
+{{--                <td  colspan="2">--}}
+{{--                    {{ enNumberToBn($item->productItem->name??'') }} - {{ enNumberToBn($item->productCategory->name??'') }}--}}
+{{--                </td>--}}
+{{--                <td>--}}
+{{--                    {{ enNumberToBn($item->quantity) }}--}}
+{{--                </td>--}}
+{{--                <td class="text-right" width="100">--}}
+{{--                    @if(auth()->user()->role == 2)--}}
+{{--                        {{ enNumberToBn(number_format($item->buy_price, 2)) }}--}}
+{{--                    @else--}}
+{{--                        {{ enNumberToBn(number_format($item->unit_price, 2)) }}--}}
+{{--                    @endif--}}
+{{--                </td>--}}
+{{--                <td class="text-right" width="100">--}}
+{{--                    @if(auth()->user()->role == 2)--}}
+{{--                        {{ enNumberToBn(number_format(($item->buy_price) * $item->quantity, 2)) }}--}}
+{{--                    @else--}}
+{{--                        {{ enNumberToBn(number_format($item->total, 2)) }}--}}
+{{--                    @endif--}}
+{{--                </td>--}}
+{{--            </tr>--}}
+        @endforeach
         <tr>
             <td style="">আজকের বিল</td>
             <td style="">{{ enNumberToBn(number_format($subTotal,2)) }}</td>
@@ -228,44 +320,6 @@
             <td>নিট মূল্য</td>
             <td>{{ enNumberToBn(number_format($total,2)) }}</td>
         </tr>
-{{--        @if($order->previous_due>0)--}}
-{{--            <tr>--}}
-{{--                <td>Previous Due</td>--}}
-{{--                <td>{{ number_format($order->previous_due,2) }}</td>--}}
-{{--            </tr>--}}
-{{--        @endif--}}
-{{--        @if($order->transport_cost>0)--}}
-{{--            <tr>--}}
-{{--                <td>Transport Cost</td>--}}
-{{--                <td>{{ number_format($order->transport_cost,2) }}</td>--}}
-{{--            </tr>--}}
-{{--        @endif--}}
-{{--        @if($order->return_amount>0)--}}
-{{--            <tr>--}}
-{{--                <td>Return Amount</td>--}}
-{{--                <td>{{ number_format($order->return_amount,2) }}</td>--}}
-{{--            </tr>--}}
-{{--        @endif--}}
-{{--        @if($order->sale_adjustment>0)--}}
-{{--            <tr>--}}
-{{--                <td>Sale Adjustment</td>--}}
-{{--                <td>{{ number_format($order->sale_adjustment,2) }}</td>--}}
-{{--            </tr>--}}
-{{--        @endif--}}
-{{--        @if($order->discount>0)--}}
-{{--            <tr>--}}
-{{--                <td>Discount</td>--}}
-{{--                <td>{{ number_format($order->discount,2) }}</td>--}}
-{{--            </tr>--}}
-{{--        @endif--}}
-{{--        <tr>--}}
-{{--            <td>Deposit</td>--}}
-{{--            <td>{{ number_format($order->paid,2) }}</td>--}}
-{{--        </tr>--}}
-{{--        <tr>--}}
-{{--            <td>Due</td>--}}
-{{--            <td>{{ number_format($order->current_due,2) }}</td>--}}
-{{--        </tr>--}}
     </table>
     @php
         $numto = new \Rakibhstu\Banglanumber\NumberToBangla();

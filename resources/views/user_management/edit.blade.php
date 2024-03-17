@@ -6,7 +6,7 @@
 @endsection
 
 @section('title')
-    User Edit
+    ইউজার এডিট
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header with-border">
-                    <h3 class="card-title">User Information</h3>
+                    <h3 class="card-title">ইউজার তথ্য</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
@@ -23,7 +23,7 @@
                     <input type="hidden" class="form-control" name="company_branch_id" value="1">
                     <div class="card-body">
                         <div class="form-group row {{ $errors->has('name') ? 'has-error' :'' }}">
-                            <label class="col-sm-2 col-form-label">Name *</label>
+                            <label class="col-sm-2 col-form-label">নাম *</label>
 
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" placeholder="Enter Name" name="name" value="{{ empty(old('name')) ? ($errors->has('name') ? '' : $user->name) : old('name') }}">
@@ -34,7 +34,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Role *</label>
+                            <label class="col-sm-2 col-form-label">রোল *</label>
                             <div class="col-sm-10">
 
                                 <select class="form-control" name="role">
@@ -56,7 +56,7 @@
 {{--                        </div>--}}
 
                         <div class="form-group row {{ $errors->has('email') ? 'has-error' :'' }}">
-                            <label class="col-sm-2 col-form-label">Email *</label>
+                            <label class="col-sm-2 col-form-label">ইমেল*</label>
 
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" placeholder="Enter Email"
@@ -69,7 +69,7 @@
                         </div>
 
                         <div class="form-group row {{ $errors->has('password') ? 'has-error' :'' }}">
-                            <label class="col-sm-2 col-form-label">Password *</label>
+                            <label class="col-sm-2 col-form-label">পাসওয়ার্ড *</label>
 
                             <div class="col-sm-10">
                                 <input type="password" class="form-control" placeholder="Enter Password"
@@ -82,7 +82,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Confirm Password *</label>
+                            <label class="col-sm-2 col-form-label">কনফার্ম পাসওয়ার্ড *</label>
 
                             <div class="col-sm-10">
                                 <input type="password" class="form-control" placeholder="Enter Confirm Password"
@@ -473,7 +473,7 @@
                     <!-- /.box-body -->
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary">সেভ</button>
                     </div>
                 </form>
             </div>

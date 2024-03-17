@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Cash
+    ক্যাশ
 @endsection
 
 @section('content')
@@ -15,7 +15,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header with-border">
-                    <h3 class="card-title"> Cash Description </h3>
+                    <h3 class="card-title"> ক্যাশ বর্ণনা </h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
@@ -25,7 +25,7 @@
                     <div class="card-body">
                         @if (empty($cash))
                             <div class="form-group row {{ $errors->has('opening_balance') ? 'has-error' :'' }}">
-                                <label class="col-sm-2 col-form-label"> Opening Balance *</label>
+                                <label class="col-sm-2 col-form-label"> ওপেনিং ব্যালান্স *</label>
 
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" placeholder="Opening Balance"
@@ -37,7 +37,7 @@
                             </div>
                         @else
                             <div class="form-group row {{ $errors->has('amount') ? 'has-error' :'' }}">
-                                <label class="col-sm-2 col-form-label"> Balance *</label>
+                                <label class="col-sm-2 col-form-label"> ব্যালান্স *</label>
 
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" placeholder="Balance"
@@ -48,7 +48,7 @@
                                 </div>
                             </div>
                             <div class="form-group row {{ $errors->has('opening_balance') ? 'has-error' :'' }}">
-                                <label class="col-sm-2 col-form-label"> Opening Balance *</label>
+                                <label class="col-sm-2 col-form-label"> ওপেনিং ব্যালান্স *</label>
 
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" placeholder="Opening Balance"
@@ -64,7 +64,7 @@
                     <!-- /.box-body -->
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary"> Save </button>
+                        <button type="submit" class="btn btn-primary"> সেভ </button>
                     </div>
                 </form>
             </div>

@@ -28,51 +28,42 @@ use App\ReturnPaidLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Rakibhstu\Banglanumber\NumberToBangla;
 use Ramsey\Uuid\Uuid;
 use SakibRahaman\DecimalToWords\DecimalToWords;
-use DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class SaleController extends Controller
 {
     public function retailSaleOrder() {
         $warehouses = Warehouse::where('status', 1)->orderBy('name')->get();
-        if (Auth::user()->company_branch_id == 0) {
-            $customers = Customer::where('status', 1)->with('branch')->orderBy('name')->get();
-        }else{
-            $customers = Customer::where('status', 1)->where('company_branch_id',Auth::user()->company_branch_id)->orderBy('name')->get();
-        }
+//        if (Auth::user()->company_branch_id == 0) {
+//            $customers = Customer::where('type',1)->where('status', 1)->with('branch')->orderBy('name')->get();
+//        }else{
+//            $customers = Customer::where('type',1)->where('status', 1)->where('company_branch_id',Auth::user()->company_branch_id)->orderBy('name')->get();
+//        }
+        $customer = Customer::where('id',3)->where('type',1)->first();
         $bankAccounts = BankAccount::where('status', 1)->get();
         $productItems = ProductItem::where('status', 1)->orderBy('name')->get();
         $companyBranches = CompanyBranch::where('status', 1)->orderBy('name')->get();
-//        if (Auth::user()->company_branch_id == 0) {
-//            $sale_orders = SalesOrder::where('type',1)->orderBy('id','desc')->take(10)->get();
-//        }else{
-//            $sale_orders = SalesOrder::where('type',1)->where('company_branch_id',Auth::user()->company_branch_id)->orderBy('id','desc')->take(10)->get();
-//        }
         $sale_orders = SalesOrder::where('type',1)->orderBy('id','desc')->take(10)->get();
         $companies = Supplier::where('status',1)->get();
 
         return view('sale.sales_order.create_retail_sale', compact('warehouses', 'bankAccounts',
-            'productItems','customers','companyBranches','sale_orders','companies'));
+            'productItems','customer','companyBranches','sale_orders','companies'));
     }
     public function wholeSaleOrder() {
         $warehouses = Warehouse::where('status', 1)->orderBy('name')->get();
         if (Auth::user()->company_branch_id == 0) {
-            $customers = Customer::where('status', 1)->with('branch')->orderBy('name')->get();
+            $customers = Customer::where('type',2)->where('status', 1)->with('branch')->orderBy('name')->get();
         }else{
-            $customers = Customer::where('status', 1)->where('company_branch_id',Auth::user()->company_branch_id)->orderBy('name')->get();
+            $customers = Customer::where('type',2)->where('status', 1)->where('company_branch_id',Auth::user()->company_branch_id)->orderBy('name')->get();
         }
         $bankAccounts = BankAccount::where('status', 1)->get();
         $productItems = ProductItem::where('status', 1)->orderBy('name')->get();
         $companyBranches = CompanyBranch::where('status', 1)->orderBy('name')->get();
-//        if (Auth::user()->company_branch_id == 0) {
-//            $sale_orders = SalesOrder::where('type',2)->orderBy('id','desc')->take(10)->get();
-//        }else{
-//            $sale_orders = SalesOrder::where('type',2)->where('company_branch_id',Auth::user()->company_branch_id)->orderBy('id','desc')->take(10)->get();
-//        }
         $sale_orders = SalesOrder::where('type',2)->orderBy('id','desc')->take(10)->get();
         $companies = Supplier::where('status',1)->get();
 
@@ -183,75 +174,69 @@ class SaleController extends Controller
         if (!$available) {
             return redirect()->back()->withInput()->with('message', $message);
         }
-
-
-
-        $order = new SalesOrder();
-//        if (Auth::user()->company_branch_id == 0) {
-//            $order->company_branch_id = $request->companyBranch;
-//        }else{
-//            $order->company_branch_id = Auth::user()->company_branch_id;
-//        }
-        $order->company_branch_id = 1;
-        $order->type = $request->type;
-        $order->invoice_type = $request->invoice_type;
-        $order->customer_id = $request->customer;
+        DB::beginTransaction();
+        try {
+            $order = new SalesOrder();
+            $order->company_branch_id = 1;
+            $order->type = 1;
+            $order->invoice_type = $request->invoice_type;
+            $order->customer_id = $request->customer;
 //        $order->received_by = $request->received_by;
-        $order->date = $request->date;
-        $order->note = $request->note;
-        $order->sub_total = 0;
-        $order->vat_percentage = $request->vat;
-        $order->vat = 0;
-        $order->discount_percentage = $request->discount_percentage;
-        $order->discount = $request->discount;
-        $order->transport_cost = $request->transport_cost;
-        $order->return_amount = $request->return_amount??0;
-        $order->sale_adjustment = $request->sale_adjustment??0;
-        $order->sale_type = $request->sale_type;
-        $order->total = 0;
-        $order->paid = $request->paid;
-        if ($request->payment_type == 3){
-            $order->client_bank_name = $request->client_bank_name;
-            $order->client_cheque_no = $request->client_cheque_no;
-            $order->cheque_date = $request->cheque_date;
-            $order->client_amount = $request->cheque_amount;
-        }
-        $order->due = 0;
-        $order->previous_due = $request->previous_due;
-        $order->current_due = $request->due_total;
-        $order->user_id = Auth::user()->id;
+            $order->date = $request->date;
+            $order->note = $request->note;
+            $order->sub_total = 0;
+            $order->vat_percentage = $request->vat;
+            $order->vat = 0;
+            $order->discount_percentage = $request->discount_percentage;
+            $order->discount = $request->discount;
+            $order->transport_cost = $request->transport_cost;
+            $order->return_amount = $request->return_amount??0;
+            $order->sale_adjustment = $request->sale_adjustment??0;
+            $order->sale_type = $request->sale_type;
+            $order->total = 0;
+            $order->paid = $request->paid;
+            if ($request->payment_type == 3){
+                $order->client_bank_name = $request->client_bank_name;
+                $order->client_cheque_no = $request->client_cheque_no;
+                $order->cheque_date = $request->cheque_date;
+                $order->client_amount = $request->cheque_amount;
+            }
+            $order->due = 0;
+            $order->previous_due = $request->previous_due;
+            $order->current_due = $request->due_total;
+            $order->user_id = Auth::user()->id;
 
-        $branch_id = 1;
-        $checkSaleOrder = SalesOrder::where('type',1)->where('company_branch_id',$branch_id)->orderBy('id','desc')->first();
-        if ($checkSaleOrder){
-            $order_no = (int)$checkSaleOrder->order_no + 1;
-        }else{
-            $order_no = 1;
-        }
-        $order->order_no = str_pad($order_no, 6, 0, STR_PAD_LEFT);
-        $order->save();
+            $branch_id = 1;
+            $checkSaleOrder = SalesOrder::where('type',1)->where('company_branch_id',$branch_id)->orderBy('id','desc')->first();
+            if ($checkSaleOrder){
+                $order_no = (int)$checkSaleOrder->order_no + 1;
+            }else{
+                $order_no = 1;
+            }
+            $order->order_no = str_pad($order_no, 6, 0, STR_PAD_LEFT);
+            $order->save();
 
-        $subTotal = 0;
-        $invoiceProfit = 0;
-        if  ($request->purchase_inventory) {
-            foreach ($request->purchase_inventory as $key => $purchase_inventory_id) {
-                $inventory = PurchaseInventory::find($purchase_inventory_id);
-                //dd($inventory);
-                if ($inventory) {
-                    $sales_order_product = SalesOrderProduct::where('sales_order_id', $order->id)->where('purchase_inventory_id', $purchase_inventory_id)->first();
-                    if (empty($sales_order_product)) {
-                        SalesOrderProduct::create([
-                            'sales_order_id' => $order->id,
-                            'purchase_inventory_id' => $purchase_inventory_id,
-                            'product_item_id' => $inventory->product_item_id,
-                            'product_category_id' => $inventory->product_category_id,
-                            'warehouse_id' => $inventory->warehouse_id,
-                            'serial' => $inventory->serial,
-                            'quantity' => $request->quantity[$key],
-                            'buy_price' => $inventory->unit_price,
-                            'unit_price' => $request->unit_price[$key],
-                            'total' => $request->quantity[$key] * $request->unit_price[$key],
-                        ]);
+            $subTotal = 0;
+            $invoiceProfit = 0;
+            if  ($request->purchase_inventory) {
+                foreach ($request->purchase_inventory as $key => $purchase_inventory_id) {
+                    $inventory = PurchaseInventory::find($purchase_inventory_id);
+                    //dd($inventory);
+                    if ($inventory) {
+                        $sales_order_product = SalesOrderProduct::where('sales_order_id', $order->id)->where('purchase_inventory_id', $purchase_inventory_id)->first();
+                        if (empty($sales_order_product)) {
+                            SalesOrderProduct::create([
+                                'sales_order_id' => $order->id,
+                                'purchase_inventory_id' => $purchase_inventory_id,
+                                'product_item_id' => $inventory->product_item_id,
+                                'product_category_id' => $inventory->product_category_id,
+                                'warehouse_id' => $inventory->warehouse_id,
+                                'serial' => $inventory->serial,
+                                'quantity' => $request->quantity[$key],
+                                'buy_price' => $inventory->unit_price,
+                                'unit_price' => $request->unit_price[$key],
+                                'total' => $request->quantity[$key] * $request->unit_price[$key],
+                            ]);
 
                             // Inventory Log
                             $inventoryLog = PurchaseInventoryLog::where('sales_order_id', $order->id)
@@ -279,203 +264,151 @@ class SaleController extends Controller
                             $inventoryLog->user_id = Auth::id();
                             $inventoryLog->save();
 
-                        $subTotal += $request->quantity[$key] * $request->unit_price[$key];
-                        $invoiceProfit += ($request->quantity[$key] * $request->unit_price[$key])-($inventory->avg_unit_price*$request->quantity[$key]);
+                            $subTotal += $request->quantity[$key] * $request->unit_price[$key];
+                            $invoiceProfit += ($request->quantity[$key] * $request->unit_price[$key])-($inventory->avg_unit_price*$request->quantity[$key]);
 
                             $inventory->decrement('quantity', $request->quantity[$key]);
-                        // $inventory->update([
-                        //     'quantity' => $inventory->in_product - $inventory->out_product,
-                        // ]);
+                            // $inventory->update([
+                            //     'quantity' => $inventory->in_product - $inventory->out_product,
+                            // ]);
+                        }
+
                     }
 
                 }
-
             }
-        }
 
-        $order->sub_total = $subTotal;
-        $vat = ($subTotal * $request->vat) / 100;
-        $order->vat = $vat;
-        $total = $subTotal + $request->transport_cost + $vat - $request->discount - $request->return_amount - $request->sale_adjustment;
-        $order->total = $total;
-        $order->invoice_total = $total > $request->paid ? $request->paid : $total;
-        if ($request->paid > $total){
-            $due = 0;
-        }else{
-            $due = $total - $request->paid;
-        }
-        $order->due = $due;
-        $order->invoice_profit = round($invoiceProfit-$request->discount-$returnProfit);
-        $order->next_payment = $due > 0 ? $request->next_payment??'' : null;
-        $order->save();
-
-        //Net profit log
-        $log = new TransactionLog();
-        $log->date = $request->date;
-        $log->particular = 'Receive from '.($order->order_no).' '.$order->customer->name;
-        $log->transaction_type = 1;
-        $log->transaction_method = 1;
-        $log->account_head_type_id = 2;
-        $log->account_head_sub_type_id = 2;
-        $log->amount =  round($invoiceProfit-$request->discount-$returnProfit);
-        $log->company_branch_id = $order->company_branch_id;
-        $log->sale_type_status = 1;
-        $log->net_profit = 1;
-        $log->save();
-
-        //Return paid log
-
-        if($request->return_amount > 0){
-            $returnPaid = new ReturnPaidLog();
-            $returnPaid->customer_id = $request->customer;
-            $returnPaid->sales_order_id = $order->id;
-            $returnPaid->product_return_order_id = $returnOrder->id;
-            $returnPaid->amount = $request->return_amount;
-            $returnPaid->date = $request->date;
-            $returnPaid->save();
-        }
-
-        // Sales Payment
-        if ($request->paid > 0) {
-            if ($request->payment_type == 1){
-                $payment = new SalePayment();
-                $payment->sales_order_id = $order->id;
-                $payment->customer_id = $request->customer;
-                $payment->sale_type_status = 1;
-                $payment->company_branch_id = $order->company_branch_id;
-                $payment->transaction_method = 1;
-                $payment->received_type = 1;
-                $payment->amount = $request->paid;
-                $payment->date = $request->date;
-                $payment->status = 2;
-                $payment->save();
-
-                Cash::first()->increment('amount', $request->paid);
-                //BranchCash::where('company_branch_id',$order->company_branch_id)->first()->increment('amount', $request->paid);
-
-                $log = new TransactionLog();
-                $log->date = $request->date;
-                $log->particular = 'Rev. from '.($order->order_no).' '.$order->customer->name;
-                $log->transaction_type = 1;
-                $log->transaction_method = 1;
-                $log->account_head_type_id = 2;
-                $log->account_head_sub_type_id = 2;
-                $log->amount =  $request->paid;
-                $log->customer_id = $request->customer??null;
-                $log->sale_type_status = 1;
-                $log->sale_payment_id = $payment->id;
-                $log->company_branch_id = $order->company_branch_id;
-                $log->sales_order_id = $order->id;
-                $log->save();
+            $order->sub_total = $subTotal;
+            $vat = ($subTotal * $request->vat) / 100;
+            $order->vat = $vat;
+            $total = $subTotal + $request->transport_cost + $vat - $request->discount - $request->return_amount - $request->sale_adjustment;
+            $order->total = $total;
+            $order->invoice_total = $total > $request->paid ? $request->paid : $total;
+            if ($request->paid > $total){
+                $due = 0;
+            }else{
+                $due = $total - $request->paid;
             }
-            if ($request->payment_type == 2) {
+            $order->due = $due;
+            $order->invoice_profit = round($invoiceProfit-$request->discount-$returnProfit);
+            $order->next_payment = $due > 0 ? $request->next_payment??'' : null;
+            $order->save();
 
-                $bankAccount = BankAccount::find($request->account_no);
+            //Net profit log
+            $log = new TransactionLog();
+            $log->date = $request->date;
+            $log->particular = 'Receive from '.($order->order_no).' '.$order->customer->name;
+            $log->transaction_type = 1;
+            $log->transaction_method = 1;
+            $log->account_head_type_id = 2;
+            $log->account_head_sub_type_id = 2;
+            $log->amount =  round($invoiceProfit-$request->discount-$returnProfit);
+            $log->company_branch_id = $order->company_branch_id;
+            $log->sale_type_status = 1;
+            $log->net_profit = 1;
+            $log->save();
 
-                $payment = new SalePayment();
-                $payment->sales_order_id = $order->id;
-                $payment->customer_id = $request->customer;
-                $payment->sale_type_status = 1;
-                $payment->company_branch_id = $order->company_branch_id;
-                $payment->transaction_method= 2;
+            //Return paid log
+
+            if($request->return_amount > 0){
+                $returnPaid = new ReturnPaidLog();
+                $returnPaid->customer_id = $request->customer;
+                $returnPaid->sales_order_id = $order->id;
+                $returnPaid->product_return_order_id = $returnOrder->id;
+                $returnPaid->amount = $request->return_amount;
+                $returnPaid->date = $request->date;
+                $returnPaid->save();
+            }
+
+            // Sales Payment
+            if ($request->paid > 0) {
+                if ($request->payment_type == 1){
+                    $payment = new SalePayment();
+                    $payment->sales_order_id = $order->id;
+                    $payment->customer_id = $request->customer;
+                    $payment->sale_type_status = 1;
+                    $payment->company_branch_id = $order->company_branch_id;
+                    $payment->transaction_method = 1;
+                    $payment->received_type = 1;
+                    $payment->amount = $request->paid;
+                    $payment->date = $request->date;
+                    $payment->status = 2;
+                    $payment->save();
+
+                    Cash::first()->increment('amount', $request->paid);
+                    //BranchCash::where('company_branch_id',$order->company_branch_id)->first()->increment('amount', $request->paid);
+
+                    $log = new TransactionLog();
+                    $log->date = $request->date;
+                    $log->particular = 'Rev. from '.($order->order_no).' '.$order->customer->name;
+                    $log->transaction_type = 1;
+                    $log->transaction_method = 1;
+                    $log->account_head_type_id = 2;
+                    $log->account_head_sub_type_id = 2;
+                    $log->amount =  $request->paid;
+                    $log->customer_id = $request->customer??null;
+                    $log->sale_type_status = 1;
+                    $log->sale_payment_id = $payment->id;
+                    $log->company_branch_id = $order->company_branch_id;
+                    $log->sales_order_id = $order->id;
+                    $log->save();
+                }
+                if ($request->payment_type == 2) {
+
+                    $bankAccount = BankAccount::find($request->account_no);
+
+                    $payment = new SalePayment();
+                    $payment->sales_order_id = $order->id;
+                    $payment->customer_id = $request->customer;
+                    $payment->sale_type_status = 1;
+                    $payment->company_branch_id = $order->company_branch_id;
+                    $payment->transaction_method= 2;
 //                $payment->client_bank_name = $request->client_bank_name;
 //                $payment->client_cheque_no = $request->client_cheque_no;
 //                $payment->client_amount = $request->paid;
-                $payment->bank_id = $bankAccount->bank_id;
-                $payment->branch_id = $bankAccount->branch_id;
-                $payment->bank_account_id = $bankAccount->id;
-                $payment->cheque_no = $request->cheque_no;
+                    $payment->bank_id = $bankAccount->bank_id;
+                    $payment->branch_id = $bankAccount->branch_id;
+                    $payment->bank_account_id = $bankAccount->id;
+                    $payment->cheque_no = $request->cheque_no;
 //                $payment->cheque_image = $image;
-                $payment->amount = $request->paid;
-                $payment->date = $request->date;
-                $payment->cheque_date = $request->cheque_date;
-                $payment->note = $request->note;
-                $payment->status = 2;
-                $payment->save();
+                    $payment->amount = $request->paid;
+                    $payment->date = $request->date;
+                    $payment->cheque_date = $request->cheque_date;
+                    $payment->note = $request->note;
+                    $payment->status = 2;
+                    $payment->save();
 
-                BankAccount::find($request->account_no)->increment('balance', $request->paid);
+                    BankAccount::find($request->account_no)->increment('balance', $request->paid);
 
-                $log = new TransactionLog();
-                $log->date = $request->date;
-                $log->particular = 'Rev. from '.($order->order_no).' '.$order->customer->name;
-                $log->transaction_type = 1;
-                $log->transaction_method = 2;
-                $log->account_head_type_id = 2;
-                $log->account_head_sub_type_id = 2;
-                $log->bank_id = $bankAccount->bank_id;
-                $log->branch_id = $bankAccount->branch_id;
-                $log->bank_account_id = $bankAccount->id;
+                    $log = new TransactionLog();
+                    $log->date = $request->date;
+                    $log->particular = 'Rev. from '.($order->order_no).' '.$order->customer->name;
+                    $log->transaction_type = 1;
+                    $log->transaction_method = 2;
+                    $log->account_head_type_id = 2;
+                    $log->account_head_sub_type_id = 2;
+                    $log->bank_id = $bankAccount->bank_id;
+                    $log->branch_id = $bankAccount->branch_id;
+                    $log->bank_account_id = $bankAccount->id;
 //                $log->cheque_no = $request->cheque_no;
 //                $log->cheque_image = $image;
-                $log->amount = $request->paid;
-                $log->customer_id = $request->customer ?? null;
-                $log->sale_type_status = 1;
-                $log->company_branch_id = $order->company_branch_id;
-                $log->sales_order_id = $order->id;
-                $log->sale_type_status = $payment->id;
-                $log->payment_cheak_status = 1;
-                $log->save();
+                    $log->amount = $request->paid;
+                    $log->customer_id = $request->customer ?? null;
+                    $log->sale_type_status = 1;
+                    $log->company_branch_id = $order->company_branch_id;
+                    $log->sales_order_id = $order->id;
+                    $log->sale_type_status = $payment->id;
+                    $log->payment_cheak_status = 1;
+                    $log->save();
 
+                }
             }
+            DB::commit();
+            return redirect()->route('sale_receipt.details', ['order' => $order->id,'receipt'=>1,'type'=>'retail_sale']);
+        }catch (\Exception $exception){
+            DB::rollBack();
+            return redirect()->back()->withInput()->with('error',$exception->getMessage());
         }
-
-//        if ($request->payment_type == 2) {
-//
-//            //$image = 'img/no_image.png';
-//
-////            if ($request->cheque_image) {
-////                // Upload Image
-////                $file = $request->file('cheque_image');
-////                $filename = Uuid::uuid1()->toString().'.'.$file->getClientOriginalExtension();
-////                $destinationPath = 'public/uploads/sales_payment_cheque';
-////                $file->move($destinationPath, $filename);
-////                $image = 'uploads/sales_payment_cheque/'.$filename;
-////            }
-//
-//            $payment = new SalePayment();
-//            $payment->sales_order_id = $order->id;
-//            $payment->customer_id = $request->customer;
-//            $payment->company_branch_id = $order->company_branch_id;
-//            $payment->transaction_method = 2;
-//            $payment->client_bank_name = $request->client_bank_name;
-//            $payment->client_cheque_no = $request->client_cheque_no;
-//            $payment->client_amount = $request->client_amount;
-////                $payment->bank_id = $request->bank;
-////                $payment->branch_id = $request->branch;
-////                $payment->bank_account_id = $request->account;
-////                $payment->cheque_no = $request->cheque_no;
-////                $payment->cheque_image = $image;
-//            $payment->amount = $request->client_amount;
-//            $payment->date = $request->date;
-//            $payment->cheque_date = $request->cheque_date;
-//            $payment->note = $request->note;
-//            $payment->status = 1;
-//            $payment->save();
-//
-//            //BankAccount::find($request->account)->decrement('balance', $request->paid);
-//
-//            $log = new TransactionLog();
-//            $log->date = $request->date;
-//            $log->particular = 'Rev. from '.($order->order_no).' '.$order->customer->name;
-//            $log->transaction_type = 1;
-//            $log->transaction_method = 2;
-//            $log->account_head_type_id = 2;
-//            $log->account_head_sub_type_id = 2;
-//            //$log->bank_id = $request->bank;
-//            //$log->branch_id = $request->branch;
-//            //$log->bank_account_id = $request->account;
-//            //$log->cheque_no = $request->cheque_no;
-//            //$log->cheque_image = $image;
-//            $log->amount = $request->client_amount;
-//            $log->customer_id = $request->customer ?? null;
-//            $log->company_branch_id = $order->company_branch_id;
-//            $log->sales_order_id = $order->id;
-//            $log->sale_payment_id = $payment->id;
-//            $log->payment_cheak_status = 1;
-//            $log->save();
-//
-//        }
-        return redirect()->route('sale_receipt.details', ['order' => $order->id,'receipt'=>1,'type'=>'retail_sale']);
     }
 
     public function wholeSaleOrderPost(Request $request){
@@ -556,75 +489,69 @@ class SaleController extends Controller
         if (!$available) {
             return redirect()->back()->withInput()->with('message', $message);
         }
+        DB::beginTransaction();
+        try {
+            $order = new SalesOrder();
+            $order->company_branch_id = 1;
 
-
-
-        $order = new SalesOrder();
-//        if (Auth::user()->company_branch_id == 0) {
-//            $order->company_branch_id = $request->companyBranch;
-//        }else{
-//            $order->company_branch_id = Auth::user()->company_branch_id;
-//        }
-        $order->company_branch_id = 1;
-
-        $order->type = $request->type;
-        $order->invoice_type = $request->invoice_type;
-        $order->customer_id = $request->customer;
+            $order->type = 2;
+            $order->invoice_type = $request->invoice_type;
+            $order->customer_id = $request->customer;
 //        $order->received_by = $request->received_by;
-        $order->date = $request->date;
-        $order->note = $request->note;
-        $order->sub_total = 0;
-        $order->vat_percentage = $request->vat;
-        $order->vat = 0;
-        $order->discount_percentage = $request->discount_percentage;
-        $order->discount = $request->discount;
-        $order->transport_cost = $request->transport_cost;
-        $order->return_amount = $request->return_amount??0;
-        $order->sale_adjustment = $request->sale_adjustment??0;
-        $order->sale_type = $request->sale_type;
-        $order->total = 0;
-        $order->paid = $request->paid;
-        if ($request->payment_type == 3){
-            $order->client_bank_name = $request->client_bank_name;
-            $order->client_cheque_no = $request->client_cheque_no;
-            $order->cheque_date = $request->cheque_date;
-            $order->client_amount = $request->cheque_amount;
-        }
-        $order->due = 0;
-        $order->previous_due = $request->previous_due;
-        $order->current_due = $request->due_total;
-        $order->user_id = Auth::user()->id;
+            $order->date = $request->date;
+            $order->note = $request->note;
+            $order->sub_total = 0;
+            $order->vat_percentage = $request->vat;
+            $order->vat = 0;
+            $order->discount_percentage = $request->discount_percentage;
+            $order->discount = $request->discount;
+            $order->transport_cost = $request->transport_cost;
+            $order->return_amount = $request->return_amount??0;
+            $order->sale_adjustment = $request->sale_adjustment??0;
+            $order->sale_type = $request->sale_type;
+            $order->total = 0;
+            $order->paid = $request->paid;
+            if ($request->payment_type == 3){
+                $order->client_bank_name = $request->client_bank_name;
+                $order->client_cheque_no = $request->client_cheque_no;
+                $order->cheque_date = $request->cheque_date;
+                $order->client_amount = $request->cheque_amount;
+            }
+            $order->due = 0;
+            $order->previous_due = $request->previous_due;
+            $order->current_due = $request->due_total;
+            $order->user_id = Auth::user()->id;
 
-        $branch_id = 1;
-        $checkSaleOrder = SalesOrder::where('type',2)->where('company_branch_id',$branch_id)->orderBy('id','desc')->first();
-        if ($checkSaleOrder){
-            $order_no = (int)$checkSaleOrder->order_no + 1;
-        }else{
-            $order_no = 1;
-        }
-        $order->order_no = str_pad($order_no, 6, 0, STR_PAD_LEFT);
-        $order->save();
+            $branch_id = 1;
+            $checkSaleOrder = SalesOrder::where('type',2)->where('company_branch_id',$branch_id)->orderBy('id','desc')->first();
+            if ($checkSaleOrder){
+                $order_no = (int)$checkSaleOrder->order_no + 1;
+            }else{
+                $order_no = 1;
+            }
+            $order->order_no = str_pad($order_no, 6, 0, STR_PAD_LEFT);
+            $order->save();
 
-        $subTotal = 0;
-        $invoiceProfit = 0;
-        if  ($request->purchase_inventory) {
-            foreach ($request->purchase_inventory as $key => $purchase_inventory_id) {
-                $inventory = PurchaseInventory::find($purchase_inventory_id);
-                if ($inventory) {
-                    $sales_order_product = SalesOrderProduct::where('sales_order_id', $order->id)->where('purchase_inventory_id', $purchase_inventory_id)->first();
-                    if (empty($sales_order_product)) {
-                        SalesOrderProduct::create([
-                            'sales_order_id' => $order->id,
-                            'purchase_inventory_id' => $purchase_inventory_id,
-                            'product_item_id' => $inventory->product_item_id,
-                            'product_category_id' => $inventory->product_category_id,
-                            'warehouse_id' => $inventory->warehouse_id,
-                            'serial' => $inventory->serial,
-                            'quantity' => $request->quantity[$key],
-                            'buy_price' => $inventory->unit_price,
-                            'unit_price' => $request->unit_price[$key],
-                            'total' => $request->quantity[$key] * $request->unit_price[$key],
-                        ]);
+            $subTotal = 0;
+            $invoiceProfit = 0;
+            if  ($request->purchase_inventory) {
+                foreach ($request->purchase_inventory as $key => $purchase_inventory_id) {
+                    $inventory = PurchaseInventory::find($purchase_inventory_id);
+                    if ($inventory) {
+                        $sales_order_product = SalesOrderProduct::where('sales_order_id', $order->id)->where('purchase_inventory_id', $purchase_inventory_id)->first();
+                        if (empty($sales_order_product)) {
+                            SalesOrderProduct::create([
+                                'sales_order_id' => $order->id,
+                                'purchase_inventory_id' => $purchase_inventory_id,
+                                'product_item_id' => $inventory->product_item_id,
+                                'product_category_id' => $inventory->product_category_id,
+                                'warehouse_id' => $inventory->warehouse_id,
+                                'serial' => $inventory->serial,
+                                'quantity' => $request->quantity[$key],
+                                'buy_price' => $inventory->unit_price,
+                                'unit_price' => $request->unit_price[$key],
+                                'total' => $request->quantity[$key] * $request->unit_price[$key],
+                            ]);
 
                             // Inventory Log
                             $inventoryLog = PurchaseInventoryLog::where('sales_order_id', $order->id)
@@ -652,203 +579,151 @@ class SaleController extends Controller
                             $inventoryLog->user_id = Auth::id();
                             $inventoryLog->save();
 
-                        $subTotal += $request->quantity[$key] * $request->unit_price[$key];
-                        $invoiceProfit += ($request->quantity[$key] * $request->unit_price[$key])-($inventory->avg_unit_price*$request->quantity[$key]);
+                            $subTotal += $request->quantity[$key] * $request->unit_price[$key];
+                            $invoiceProfit += ($request->quantity[$key] * $request->unit_price[$key])-($inventory->avg_unit_price*$request->quantity[$key]);
 
                             $inventory->decrement('quantity', $request->quantity[$key]);
-                        // $inventory->update([
-                        //     'quantity' => $inventory->in_product - $inventory->out_product,
-                        // ]);
+                            // $inventory->update([
+                            //     'quantity' => $inventory->in_product - $inventory->out_product,
+                            // ]);
+                        }
+
                     }
 
                 }
-
             }
-        }
 
-        $order->sub_total = $subTotal;
-        $vat = ($subTotal * $request->vat) / 100;
-        $order->vat = $vat;
-        $total = $subTotal + $request->transport_cost + $vat - $request->discount - $request->return_amount - $request->sale_adjustment;
-        $order->total = $total;
-        $order->invoice_total = $total > $request->paid ? $request->paid : $total;
-        if ($request->paid > $total){
-            $due = 0;
-        }else{
-            $due = $total - $request->paid;
-        }
-        $order->due = $due;
-        $order->invoice_profit = round($invoiceProfit-$request->discount-$returnProfit);
-        $order->next_payment = $due > 0 ? $request->next_payment??'' : null;
-        $order->save();
-
-        //Net profit log
-        $log = new TransactionLog();
-        $log->date = $request->date;
-        $log->particular = 'Receive from '.($order->order_no).' '.$order->customer->name;
-        $log->transaction_type = 1;
-        $log->transaction_method = 1;
-        $log->account_head_type_id = 2;
-        $log->account_head_sub_type_id = 2;
-        $log->amount =  round($invoiceProfit-$request->discount-$returnProfit);
-        $log->company_branch_id = $order->company_branch_id;
-        $log->sale_type_status = 2;
-        $log->net_profit = 1;
-        $log->save();
-
-        //Return paid log
-
-        if($request->return_amount > 0){
-            $returnPaid = new ReturnPaidLog();
-            $returnPaid->customer_id = $request->customer;
-            $returnPaid->sales_order_id = $order->id;
-            $returnPaid->product_return_order_id = $returnOrder->id;
-            $returnPaid->amount = $request->return_amount;
-            $returnPaid->date = $request->date;
-            $returnPaid->save();
-        }
-
-        // Sales Payment
-        if ($request->paid > 0) {
-            if ($request->payment_type == 1){
-                $payment = new SalePayment();
-                $payment->sales_order_id = $order->id;
-                $payment->customer_id = $request->customer;
-                $payment->sale_type_status = 2;
-                $payment->company_branch_id = $order->company_branch_id;
-                $payment->transaction_method = 1;
-                $payment->received_type = 1;
-                $payment->amount = $request->paid;
-                $payment->date = $request->date;
-                $payment->status = 2;
-                $payment->save();
-
-                Cash::first()->increment('amount', $request->paid);
-                //BranchCash::where('company_branch_id',$order->company_branch_id)->first()->increment('amount', $request->paid);
-
-                $log = new TransactionLog();
-                $log->date = $request->date;
-                $log->particular = 'Rev. from '.($order->order_no).' '.$order->customer->name;
-                $log->transaction_type = 1;
-                $log->transaction_method = 1;
-                $log->account_head_type_id = 2;
-                $log->account_head_sub_type_id = 2;
-                $log->amount =  $request->paid;
-                $log->customer_id = $request->customer??null;
-                $log->sale_type_status = 2;
-                $log->sale_payment_id = $payment->id;
-                $log->company_branch_id = $order->company_branch_id;
-                $log->sales_order_id = $order->id;
-                $log->save();
+            $order->sub_total = $subTotal;
+            $vat = ($subTotal * $request->vat) / 100;
+            $order->vat = $vat;
+            $total = $subTotal + $request->transport_cost + $vat - $request->discount - $request->return_amount - $request->sale_adjustment;
+            $order->total = $total;
+            $order->invoice_total = $total > $request->paid ? $request->paid : $total;
+            if ($request->paid > $total){
+                $due = 0;
+            }else{
+                $due = $total - $request->paid;
             }
-            if ($request->payment_type == 2) {
+            $order->due = $due;
+            $order->invoice_profit = round($invoiceProfit-$request->discount-$returnProfit);
+            $order->next_payment = $due > 0 ? $request->next_payment??'' : null;
+            $order->save();
 
-                $bankAccount = BankAccount::find($request->account_no);
+            //Net profit log
+            $log = new TransactionLog();
+            $log->date = $request->date;
+            $log->particular = 'Receive from '.($order->order_no).' '.$order->customer->name;
+            $log->transaction_type = 1;
+            $log->transaction_method = 1;
+            $log->account_head_type_id = 2;
+            $log->account_head_sub_type_id = 2;
+            $log->amount =  round($invoiceProfit-$request->discount-$returnProfit);
+            $log->company_branch_id = $order->company_branch_id;
+            $log->sale_type_status = 2;
+            $log->net_profit = 1;
+            $log->save();
 
-                $payment = new SalePayment();
-                $payment->sales_order_id = $order->id;
-                $payment->customer_id = $request->customer;
-                $payment->sale_type_status = 2;
-                $payment->company_branch_id = $order->company_branch_id;
-                $payment->transaction_method= 2;
+            //Return paid log
+
+            if($request->return_amount > 0){
+                $returnPaid = new ReturnPaidLog();
+                $returnPaid->customer_id = $request->customer;
+                $returnPaid->sales_order_id = $order->id;
+                $returnPaid->product_return_order_id = $returnOrder->id;
+                $returnPaid->amount = $request->return_amount;
+                $returnPaid->date = $request->date;
+                $returnPaid->save();
+            }
+
+            // Sales Payment
+            if ($request->paid > 0) {
+                if ($request->payment_type == 1){
+                    $payment = new SalePayment();
+                    $payment->sales_order_id = $order->id;
+                    $payment->customer_id = $request->customer;
+                    $payment->sale_type_status = 2;
+                    $payment->company_branch_id = $order->company_branch_id;
+                    $payment->transaction_method = 1;
+                    $payment->received_type = 1;
+                    $payment->amount = $request->paid;
+                    $payment->date = $request->date;
+                    $payment->status = 2;
+                    $payment->save();
+
+                    Cash::first()->increment('amount', $request->paid);
+                    //BranchCash::where('company_branch_id',$order->company_branch_id)->first()->increment('amount', $request->paid);
+
+                    $log = new TransactionLog();
+                    $log->date = $request->date;
+                    $log->particular = 'Rev. from '.($order->order_no).' '.$order->customer->name;
+                    $log->transaction_type = 1;
+                    $log->transaction_method = 1;
+                    $log->account_head_type_id = 2;
+                    $log->account_head_sub_type_id = 2;
+                    $log->amount =  $request->paid;
+                    $log->customer_id = $request->customer??null;
+                    $log->sale_type_status = 2;
+                    $log->sale_payment_id = $payment->id;
+                    $log->company_branch_id = $order->company_branch_id;
+                    $log->sales_order_id = $order->id;
+                    $log->save();
+                }
+                if ($request->payment_type == 2) {
+
+                    $bankAccount = BankAccount::find($request->account_no);
+
+                    $payment = new SalePayment();
+                    $payment->sales_order_id = $order->id;
+                    $payment->customer_id = $request->customer;
+                    $payment->sale_type_status = 2;
+                    $payment->company_branch_id = $order->company_branch_id;
+                    $payment->transaction_method= 2;
 //                $payment->client_bank_name = $request->client_bank_name;
 //                $payment->client_cheque_no = $request->client_cheque_no;
 //                $payment->client_amount = $request->paid;
-                $payment->bank_id = $bankAccount->bank_id;
-                $payment->branch_id = $bankAccount->branch_id;
-                $payment->bank_account_id = $bankAccount->id;
-                $payment->cheque_no = $request->cheque_no;
+                    $payment->bank_id = $bankAccount->bank_id;
+                    $payment->branch_id = $bankAccount->branch_id;
+                    $payment->bank_account_id = $bankAccount->id;
+                    $payment->cheque_no = $request->cheque_no;
 //                $payment->cheque_image = $image;
-                $payment->amount = $request->paid;
-                $payment->date = $request->date;
-                $payment->cheque_date = $request->cheque_date;
-                $payment->note = $request->note;
-                $payment->status = 2;
-                $payment->save();
+                    $payment->amount = $request->paid;
+                    $payment->date = $request->date;
+                    $payment->cheque_date = $request->cheque_date;
+                    $payment->note = $request->note;
+                    $payment->status = 2;
+                    $payment->save();
 
-                BankAccount::find($request->account_no)->increment('balance', $request->paid);
+                    BankAccount::find($request->account_no)->increment('balance', $request->paid);
 
-                $log = new TransactionLog();
-                $log->date = $request->date;
-                $log->particular = 'Rev. from '.($order->order_no).' '.$order->customer->name;
-                $log->transaction_type = 1;
-                $log->transaction_method = 2;
-                $log->account_head_type_id = 2;
-                $log->account_head_sub_type_id = 2;
-                $log->bank_id = $bankAccount->bank_id;
-                $log->branch_id = $bankAccount->branch_id;
-                $log->bank_account_id = $bankAccount->id;
+                    $log = new TransactionLog();
+                    $log->date = $request->date;
+                    $log->particular = 'Rev. from '.($order->order_no).' '.$order->customer->name;
+                    $log->transaction_type = 1;
+                    $log->transaction_method = 2;
+                    $log->account_head_type_id = 2;
+                    $log->account_head_sub_type_id = 2;
+                    $log->bank_id = $bankAccount->bank_id;
+                    $log->branch_id = $bankAccount->branch_id;
+                    $log->bank_account_id = $bankAccount->id;
 //                $log->cheque_no = $request->cheque_no;
 //                $log->cheque_image = $image;
-                $log->amount = $request->paid;
-                $log->customer_id = $request->customer ?? null;
-                $log->sale_type_status = 2;
-                $log->company_branch_id = $order->company_branch_id;
-                $log->sales_order_id = $order->id;
-                $log->sale_payment_id = $payment->id;
-                $log->payment_cheak_status = 1;
-                $log->save();
+                    $log->amount = $request->paid;
+                    $log->customer_id = $request->customer ?? null;
+                    $log->sale_type_status = 2;
+                    $log->company_branch_id = $order->company_branch_id;
+                    $log->sales_order_id = $order->id;
+                    $log->sale_payment_id = $payment->id;
+                    $log->payment_cheak_status = 1;
+                    $log->save();
 
+                }
             }
+            DB::commit();
+            return redirect()->route('sale_receipt.details', ['order' => $order->id,'receipt'=>1,'type'=>'whole_sale']);
+        }catch (\Exception $exception){
+            DB::rollBack();
+            return redirect()->back()->withInput()->with('error',$exception->getMessage());
         }
-
-//        if ($request->payment_type == 2) {
-//
-//            //$image = 'img/no_image.png';
-//
-////            if ($request->cheque_image) {
-////                // Upload Image
-////                $file = $request->file('cheque_image');
-////                $filename = Uuid::uuid1()->toString().'.'.$file->getClientOriginalExtension();
-////                $destinationPath = 'public/uploads/sales_payment_cheque';
-////                $file->move($destinationPath, $filename);
-////                $image = 'uploads/sales_payment_cheque/'.$filename;
-////            }
-//
-//            $payment = new SalePayment();
-//            $payment->sales_order_id = $order->id;
-//            $payment->customer_id = $request->customer;
-//            $payment->company_branch_id = $order->company_branch_id;
-//            $payment->transaction_method = 2;
-//            $payment->client_bank_name = $request->client_bank_name;
-//            $payment->client_cheque_no = $request->client_cheque_no;
-//            $payment->client_amount = $request->client_amount;
-////                $payment->bank_id = $request->bank;
-////                $payment->branch_id = $request->branch;
-////                $payment->bank_account_id = $request->account;
-////                $payment->cheque_no = $request->cheque_no;
-////                $payment->cheque_image = $image;
-//            $payment->amount = $request->client_amount;
-//            $payment->date = $request->date;
-//            $payment->cheque_date = $request->cheque_date;
-//            $payment->note = $request->note;
-//            $payment->status = 1;
-//            $payment->save();
-//
-//            //BankAccount::find($request->account)->decrement('balance', $request->paid);
-//
-//            $log = new TransactionLog();
-//            $log->date = $request->date;
-//            $log->particular = 'Rev. from '.($order->order_no).' '.$order->customer->name;
-//            $log->transaction_type = 1;
-//            $log->transaction_method = 2;
-//            $log->account_head_type_id = 2;
-//            $log->account_head_sub_type_id = 2;
-//            //$log->bank_id = $request->bank;
-//            //$log->branch_id = $request->branch;
-//            //$log->bank_account_id = $request->account;
-//            //$log->cheque_no = $request->cheque_no;
-//            //$log->cheque_image = $image;
-//            $log->amount = $request->client_amount;
-//            $log->customer_id = $request->customer ?? null;
-//            $log->company_branch_id = $order->company_branch_id;
-//            $log->sales_order_id = $order->id;
-//            $log->sale_payment_id = $payment->id;
-//            $log->payment_cheak_status = 1;
-//            $log->save();
-//
-//        }
-        return redirect()->route('sale_receipt.details', ['order' => $order->id,'receipt'=>1,'type'=>'whole_sale']);
     }
 
     public function salesWastagePost(Request $request)

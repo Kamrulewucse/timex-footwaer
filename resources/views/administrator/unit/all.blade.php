@@ -6,31 +6,24 @@
 @endsection
 
 @section('title')
-    Unit
+    একক
 @endsection
 
 @section('content')
-    @if(Session::has('message'))
-        <div class="alert alert-success alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{ Session::get('message') }}
-        </div>
-    @endif
-
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <a class="btn btn-primary" href="{{ route('unit.add') }}">Add Unit</a>
+                    <a class="btn btn-primary" href="{{ route('unit.add') }}">একক যুক্ত করুন</a>
 
                     <hr>
 
                     <table id="table" class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>নাম</th>
+                            <th>স্ট্যাটাস</th>
+                            <th>একশন</th>
                         </tr>
                         </thead>
 
@@ -40,13 +33,13 @@
                                 <td>{{ $unit->name }}</td>
                                 <td>
                                     @if ($unit->status == 1)
-                                        <span class="badge badge-success">Active</span>
+                                        <span class="badge badge-success">সক্রিয়</span>
                                     @else
-                                        <span class="badge badge-danger">Inactive</span>
+                                        <span class="badge badge-danger">নিষ্ক্রিয়</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <a class="btn btn-info btn-sm" href="{{ route('unit.edit', ['unit' => $unit->id]) }}">Edit</a>
+                                    <a class="btn btn-info btn-sm" href="{{ route('unit.edit', ['unit' => $unit->id]) }}">এডিট</a>
                                 </td>
                             </tr>
                         @endforeach

@@ -6,7 +6,7 @@
 @endsection
 
 @section('title')
-    Users
+   ইউজার
 @endsection
 
 @section('content')
@@ -21,16 +21,16 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <a class="btn btn-primary" href="{{ route('user.add') }}">Add User</a>
+                    <a class="btn btn-primary" href="{{ route('user.add') }}">ইউজার যুক্ত করুন</a>
 
                     <hr>
                     <div class="table-responsive">
                     <table id="table" class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Action</th>
+                            <th>নাম</th>
+                            <th>ইমেল</th>
+                            <th>একশন</th>
                         </tr>
                         </thead>
 
@@ -40,7 +40,7 @@
                                 <td>{{ $user->companyBranch->name ?? 'Admin' }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
-                                    <a class="btn btn-info btn-sm" href="{{ route('user.edit', ['user' => $user->id]) }}">Edit</a>
+                                    <a class="btn btn-info btn-sm" href="{{ route('user.edit', ['user' => $user->id]) }}">এডিট</a>
 {{--                                    @if ($user->company_branch_id == 0)--}}
 {{--                                        <a class="btn btn-info btn-sm" disabled>Edit</a>--}}
 {{--                                    @else--}}

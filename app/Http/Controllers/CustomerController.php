@@ -41,7 +41,7 @@ class CustomerController extends Controller
         }
         if ($request->type == 'retail_sale'){
             $type = 1;
-        }elseif ($request->type == 'retail_sale'){
+        }elseif ($request->type == 'whole_sale'){
             $type = 2;
         }
         $company_branch_id = $request->branch;
@@ -78,13 +78,26 @@ class CustomerController extends Controller
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
         }
+        if ($request->type == 'retail_sale'){
+            $type = 1;
+        }elseif ($request->type == 'whole_sale'){
+            $type = 2;
+        }
         $company_branch_id = $request->branch;
-        $checkCustomer = Customer::where('company_branch_id',$company_branch_id)->where('name',$request->name)->first();
+        $id_no = Customer::max('id_no');
+        if (!$id_no){
+            $id_no = 1000;
+        }else{
+            $id_no += 1;
+        }
+        $checkCustomer = Customer::where('type',$type)->where('company_branch_id',$company_branch_id)->where('name',$request->name)->first();
         if ($checkCustomer){
             return response()->json(['success' => false, 'message' => 'Customer already exist in this Branch']);
         }
         $customer = new Customer();
         $customer->name = $request->name;
+        $customer->id_no = $id_no;
+        $customer->type = $type;
         $customer->company_branch_id = $company_branch_id;
         $customer->mobile_no = $request->phone;
         $customer->address = $request->address;

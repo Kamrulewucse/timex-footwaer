@@ -12,7 +12,11 @@ use Ramsey\Uuid\Uuid;
 class ProductItemController extends Controller
 {
     public function index() {
-        $productItems = ProductItem::get();
+        $productItems = ProductItem::all();
+//        foreach ($productItems as $productItem){
+//            $productItem->type = 1;
+//            $productItem->save();
+//        }
         return view('purchase.product_item.all', compact('productItems'));
     }
 

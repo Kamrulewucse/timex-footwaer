@@ -6,17 +6,10 @@
 @endsection
 
 @section('title')
-    Warehouse
+ওয়্যারহাউস
 @endsection
 
 @section('content')
-    @if(Session::has('message'))
-        <div class="alert alert-success alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{ Session::get('message') }}
-        </div>
-    @endif
-
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -29,10 +22,10 @@
 
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Address</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>নাম </th>
+                            <th>ঠিকানা</th>
+                            <th>স্ট্যাটাস</th>
+                            <th>একশন</th>
                         </tr>
                         </thead>
 
@@ -43,13 +36,13 @@
                                 <td>{{ $warehouse->address }}</td>
                                 <td>
                                     @if ($warehouse->status == 1)
-                                        <span class="badge badge-success">Active</span>
+                                        <span class="badge badge-success">সক্রিয়</span>
                                     @else
-                                        <span class="badge badge-danger">Inactive</span>
+                                        <span class="badge badge-danger">নিষ্ক্রিয়</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <a class="btn btn-info btn-sm" href="{{ route('warehouse.edit', ['warehouse' => $warehouse->id]) }}">Edit</a>
+                                    <a class="btn btn-info btn-sm" href="{{ route('warehouse.edit', ['warehouse' => $warehouse->id]) }}">এডিট</a>
                                 </td>
                             </tr>
                         @endforeach

@@ -86,7 +86,7 @@
         <div class="col-xs-3 text-center">
             <div style="">
 {{--                <h2 style="margin-top: 10px;"><strong style="letter-spacing: 5px;">INVOICE</strong></h2>--}}
-                <img src="{{ asset('img/company.png') }}" style="height: 80px;"/>
+{{--                <img src="{{ asset('img/company.png') }}" style="height: 80px;"/>--}}
             </div>
         </div>
     </div>
@@ -235,14 +235,14 @@
 {{--            <span style="border-top: 1px solid black">Authorised Signature</span>--}}
 {{--        </div>--}}
 {{--    </div>--}}
-    <div class="row" style="border: 1px solid black;">
-        <div class="col-xs-6 text-center" style="padding: 17px 0px;font-size: 10px;background-color: #0ac282 !important;">
+{{--    <div class="row" style="border: 1px solid black;">--}}
+{{--        <div class="col-xs-6 text-center" style="padding: 17px 0px;font-size: 10px;background-color: #0ac282 !important;">--}}
 
-        </div>
-        <div class="col-xs-6 text-center" style="padding: 5px 0px;font-size: 17px;border-left: 1px solid black;background-color: #e63003 !important;">
-            <i style="color: #fff !important;">Trip By Megha</i>
-        </div>
-    </div>
+{{--        </div>--}}
+{{--        <div class="col-xs-6 text-center" style="padding: 5px 0px;font-size: 17px;border-left: 1px solid black;background-color: #e63003 !important;">--}}
+{{--            <i style="color: #fff !important;">Trip By Megha</i>--}}
+{{--        </div>--}}
+{{--    </div>--}}
     <div class="row">
         <div class="col-xs-12 text-center">
             Software developed by Tech&Byte. Mobile: +8801521499793,+8801603278404

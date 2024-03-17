@@ -595,34 +595,119 @@
                     Admin
                 </h3>
             </li>
-            <li class="nav-item nav-top-item mt-2">
-                <a href="{{route('purchase_order.create')}}"><button style="background-color: #0a86d8;" class="btn btn-warning">Purchase</button></a>
+            <li class="nav-item nav-top-item dropdown">
+                <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">সেটিংস</a>
+                <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+                    <li><a href="{{ route('warehouse') }}" class="dropdown-item">ওয়্যারহাউস</a></li>
+                    <li><a href="{{ route('unit') }}" class="dropdown-item">পণ্যের একক</a></li>
+                    <li class="dropdown-submenu dropdown-hover">
+                        <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">এস এম এস প্যানেল</a>
+                        <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+                            <li><a href="{{route('sms_panel')}}" class="dropdown-item">সেন্ট এস এম এস</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu dropdown-hover">
+                        <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">ইউজার  ম্যানেজমেন্ট</a>
+                        <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+                            <li><a href="{{ route('user.all') }}" class="dropdown-item">ইউজার</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </li>
-            <li class="nav-item nav-top-item ml-2 mt-2">
-                <a href="{{route('retail_sale_order_create')}}"><button style="background-color: #a82313;" class="btn btn-danger">Retail Sale</button></a>
+            <li class="nav-item nav-top-item dropdown">
+                <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">ব্যাংক & ক্যাশ</a>
+                <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+                    <li><a href="{{ route('bank') }}" class="dropdown-item">ব্যাংক</a></li>
+                    <li><a href="{{ route('branch') }}" class="dropdown-item">ব্রাঞ্চ</a></li>
+                    <li><a href="{{ route('bank_account') }}" class="dropdown-item">একাউন্ট</a></li>
+                    <li><a href="{{ route('cash') }}" class="dropdown-item">ক্যাশ</a></li>
+                </ul>
             </li>
-            <li class="nav-item nav-top-item ml-2 mt-2">
-                <a href="{{route('whole_sale_order_create')}}"><button style="background-color: #ae0eb3;" class="btn btn-danger">Whole Sale</button></a>
+            <li class="nav-item nav-top-item dropdown">
+                <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">  এইস আর & বেতন</a>
+                <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+                    <li class="dropdown-submenu dropdown-hover">
+                        <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle"> এইস আর</a>
+                        <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+                            <li><a href="{{route('department')}}" class="dropdown-item">ডিপার্টমেন্ট</a></li>
+                            <li><a href="{{route('designation')}}" class="dropdown-item">উপাধি</a></li>
+                            <li><a href="{{route('employee.all')}}" class="dropdown-item">কর্মচারী</a></li>
+                            <li><a href="{{route('employee.attendance')}}" class="dropdown-item">কর্মচারী উপস্থিতি</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu dropdown-hover">
+                        <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">বেতন</a>
+                        <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+                            <li><a href="{{ route('payroll.salary_update.index') }}" class="dropdown-item">বেতন আপডেট</a></li>
+                            <li><a href="{{ route('payroll.salary_process.index') }}" class="dropdown-item">বেতন প্রক্রিয়া</a></li>
+                            <li><a href="{{ route('payroll.leave.index') }}" class="dropdown-item">ছুটি</a></li>
+                            <li><a href="{{ route('payroll.holiday.index') }}" class="dropdown-item">হলিডে</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </li>
-            <li class="nav-item nav-top-item ml-2 mt-2 dropdown">
-                <button id="customerPaymentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #150cd4;" class="btn btn-info next dropdown-toggle">Stock</button>
-                <div class="dropdown-menu" aria-labelledby="customerPaymentDropdown">
-                    <a class="dropdown-item" href="{{ route('report_item_wise_stock') }}"><i class="nav-icon fas fa-list"></i> Item Wise Stock</a>
-                    <a class="dropdown-item" href="{{ route('report_company_wise_stock') }}"><i class="nav-icon fas fa-list"></i> Company Wise Stock</a>
-                    <a class="dropdown-item" href="{{ route('report_total_stock') }}"><i class="nav-icon fas fa-list"></i> Total Stock</a>
-                    <a class="dropdown-item" href="{{ route('report.product_in_out') }}"><i class="nav-icon fas fa-list"></i> Product In Out</a>
-                </div>
+            <li class="nav-item nav-top-item dropdown">
+                <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">ক্রয়</a>
+                <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+                    <li><a href="{{ route('supplier') }}" class="dropdown-item">সাপ্লাইয়ার</a></li>
+                    <li><a href="{{ route('product_category') }}" class="dropdown-item">পণ্যের সাইজ</a></li>
+                    <li><a href="{{ route('product_item') }}" class="dropdown-item">পণ্যের মডেল</a></li>
+                    <li><a href="{{ route('purchase_order.create') }}" class="dropdown-item">ক্রয়</a></li>
+                    <li><a href="{{ route('purchase_receipt.all') }}" class="dropdown-item">ক্রয় রিসিপ্ট</a></li>
+                    <li><a href="{{ route('supplier_payment.all') }}" class="dropdown-item">সাপ্লাইয়ার পেমেন্ট</a></li>
+                    <li><a href="{{ route('purchase_inventory.all') }}" class="dropdown-item">স্টক পণ্য</a></li>
+                </ul>
             </li>
-            <li class="nav-item nav-top-item ml-2 mt-2 dropdown">
-                <button id="customerPaymentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #426c0a;" class="btn btn-info next dropdown-toggle">Customer Payment</button>
-                <div class="dropdown-menu" aria-labelledby="customerPaymentDropdown">
-                    <a class="dropdown-item" href="{{ route('client_payment.customer.all',['type'=>'retail_sale']) }}"><i class="fas fa-money-bill"></i> Retail Payment</a>
-                    <a class="dropdown-item" href="{{ route('client_payment.customer.all',['type'=>'whole_sale']) }}"><i class="fas fa-money-bill"></i> Wholesale Payment</a>
-                </div>
+            <li class="nav-item nav-top-item dropdown">
+                <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">খুচরা বিক্রয়</a>
+                <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+                    <li><a href="{{ route('customer',['type'=>'retail_sale']) }}" class="dropdown-item">কাস্টমার</a></li>
+                    <li><a href="{{ route('retail_sale_order_create') }}" class="dropdown-item">বিক্রয়</a></li>
+                    <li><a href="{{ route('sale_receipt.customer.all',['type'=>'retail_sale']) }}" class="dropdown-item">বিক্রয় রিসিপ্ট</a></li>
+                    <li><a href="{{ route('client_payment.customer.all',['type'=>'retail_sale']) }}" class="dropdown-item">কাস্টমার পেমেন্ট</a></li>
+                </ul>
             </li>
-            <li class="nav-item nav-top-item ml-2 mt-2">
-                <a href="{{route('report.daily',['start'=>date('Y-m-d'),'end'=>date('Y-m-d')])}}"><button style="background-color: #a82313;" class="btn btn-success next">Daily Report</button></a>
+            <li class="nav-item nav-top-item dropdown">
+                <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"> পাইকারি বিক্রয়</a>
+                <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+                    <li><a href="{{ route('customer',['type'=>'whole_sale']) }}" class="dropdown-item">কাস্টমার</a></li>
+                    <li><a href="{{ route('whole_sale_order_create') }}" class="dropdown-item">বিক্রয়</a></li>
+                    <li><a href="{{ route('sale_receipt.customer.all',['type'=>'whole_sale']) }}" class="dropdown-item">বিক্রয় রিসিপ্ট</a></li>
+                    <li><a href="{{ route('client_payment.customer.all',['type'=>'whole_sale']) }}" class="dropdown-item">কাস্টমার পেমেন্ট</a></li>
+                    <li><a href="{{ route('client_payment.all_pending_check',['type'=>'whole_sale']) }}" class="dropdown-item">সকল পেন্ডিং চেক</a></li>
+                    <li><a href="{{ route('client_today_pending_check',['type'=>'whole_sale']) }}" class="dropdown-item">আজকের পেন্ডিং চেক</a></li>
+                    <li><a href="{{ route('client_payment.all_pending_cash',['type'=>'whole_sale']) }}" class="dropdown-item">সকল পেন্ডিং ক্যাশ</a></li>
+                    <li><a href="{{ route('client_today_pending_cash',['type'=>'whole_sale']) }}" class="dropdown-item">আজকের পেন্ডিং ক্যাশ</a></li>
+                </ul>
             </li>
+{{--            <li class="nav-item nav-top-item mt-2">--}}
+{{--                <a href="{{route('purchase_order.create')}}"><button style="background-color: #0a86d8;" class="btn btn-warning">Purchase</button></a>--}}
+{{--            </li>--}}
+{{--            <li class="nav-item nav-top-item ml-2 mt-2">--}}
+{{--                <a href="{{route('retail_sale_order_create')}}"><button style="background-color: #a82313;" class="btn btn-danger">Retail Sale</button></a>--}}
+{{--            </li>--}}
+{{--            <li class="nav-item nav-top-item ml-2 mt-2">--}}
+{{--                <a href="{{route('whole_sale_order_create')}}"><button style="background-color: #ae0eb3;" class="btn btn-danger">Whole Sale</button></a>--}}
+{{--            </li>--}}
+{{--            <li class="nav-item nav-top-item ml-2 mt-2 dropdown">--}}
+{{--                <button id="customerPaymentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #150cd4;" class="btn btn-info next dropdown-toggle">Stock</button>--}}
+{{--                <div class="dropdown-menu" aria-labelledby="customerPaymentDropdown">--}}
+{{--                    <a class="dropdown-item" href="{{ route('report_item_wise_stock') }}"><i class="nav-icon fas fa-list"></i> Item Wise Stock</a>--}}
+{{--                    <a class="dropdown-item" href="{{ route('report_company_wise_stock') }}"><i class="nav-icon fas fa-list"></i> Company Wise Stock</a>--}}
+{{--                    <a class="dropdown-item" href="{{ route('report_total_stock') }}"><i class="nav-icon fas fa-list"></i> Total Stock</a>--}}
+{{--                    <a class="dropdown-item" href="{{ route('report.product_in_out') }}"><i class="nav-icon fas fa-list"></i> Product In Out</a>--}}
+{{--                </div>--}}
+{{--            </li>--}}
+{{--            <li class="nav-item nav-top-item ml-2 mt-2 dropdown">--}}
+{{--                <button id="customerPaymentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #426c0a;" class="btn btn-info next dropdown-toggle">Customer Payment</button>--}}
+{{--                <div class="dropdown-menu" aria-labelledby="customerPaymentDropdown">--}}
+{{--                    <a class="dropdown-item" href="{{ route('client_payment.customer.all',['type'=>'retail_sale']) }}"><i class="fas fa-money-bill"></i> Retail Payment</a>--}}
+{{--                    <a class="dropdown-item" href="{{ route('client_payment.customer.all',['type'=>'whole_sale']) }}"><i class="fas fa-money-bill"></i> Wholesale Payment</a>--}}
+{{--                </div>--}}
+{{--            </li>--}}
+{{--            <li class="nav-item nav-top-item ml-2 mt-2">--}}
+{{--                <a href="{{route('report.daily',['start'=>date('Y-m-d'),'end'=>date('Y-m-d')])}}"><button style="background-color: #a82313;" class="btn btn-success next">Daily Report</button></a>--}}
+{{--            </li>--}}
         </ul>
 
         <!-- Right navbar links -->
@@ -729,7 +814,7 @@
                     <li class="nav-item">
                         <a href="{{ route('dashboard') }}" class="nav-link {{ Route::currentRouteName() == 'dashboard' ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>Dashboard</p>
+                            <p>ড্যাশবোর্ড</p>
                         </a>
                     </li>
                     <?php
@@ -744,7 +829,7 @@
                                 <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-list"></i>
                                     <p>
-                                        Settings
+                                        সেটিংস
                                         <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
@@ -758,7 +843,7 @@
                                         <li class="nav-item">
                                             <a href="{{ route('warehouse') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                                 <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                                <p>Warehouse</p>
+                                                <p>ওয়্যারহাউস</p>
                                             </a>
                                         </li>
                                     @endcan
@@ -771,7 +856,7 @@
                                         <li class="nav-item">
                                             <a href="{{ route('unit') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                                 <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                                <p>Unit</p>
+                                                <p>পণ্যের একক </p>
                                             </a>
                                         </li>
                                     @endcan
@@ -796,7 +881,7 @@
                                             <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }}">
                                                 <i class="nav-icon fas fa-mail-bulk"></i>
                                                 <p>
-                                                    SMS Panel
+                                                    এস এম এস প্যানেল
                                                     <i class="right fas fa-angle-left"></i>
                                                 </p>
                                             </a>
@@ -809,7 +894,7 @@
                                                 <li class="nav-item">
                                                     <a href="{{route('sms_panel')}}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                                         <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                                        <p>Send Sms</p>
+                                                        <p>সেন্ট এস এম এস</p>
                                                     </a>
                                                 </li>
 
@@ -824,7 +909,7 @@
                                             <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }}">
                                                 <i class="nav-icon fas fa-user"></i>
                                                 <p>
-                                                    User Management
+                                                    ইউজার ম্যানেজমেন্ট
                                                     <i class="right fas fa-angle-left"></i>
                                                 </p>
                                             </a>
@@ -837,7 +922,7 @@
                                                 <li class="nav-item">
                                                     <a href="{{route('user.all')}}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                                         <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                                        <p>Users</p>
+                                                        <p>ইউজার</p>
                                                     </a>
                                                 </li>
 
@@ -859,7 +944,7 @@
                             <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-list"></i>
                                 <p>
-                                    Bank & Cash
+                                    ব্যাংক & ক্যাশ
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -873,7 +958,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('bank') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Bank</p>
+                                            <p>ব্যাংক</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -886,7 +971,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('branch') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Branch</p>
+                                            <p>ব্রাঞ্চ</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -899,7 +984,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('bank_account') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Account</p>
+                                            <p>একাউন্ট</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -913,7 +998,7 @@
                                         <li class="nav-item">
                                             <a href="{{ route('cash') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                                 <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                                <p>Cash</p>
+                                                <p>ক্যাশ</p>
                                             </a>
                                         </li>
                                     @endcan
@@ -945,7 +1030,7 @@
                     <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-list"></i>
                         <p>
-                            HR
+                            এইস আর
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -959,7 +1044,7 @@
                         <li class="nav-item">
                             <a href="{{ route('department') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                 <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                <p>Department</p>
+                                <p>ডিপার্টমেন্ট</p>
                             </a>
                         </li>
                     @endcan
@@ -972,7 +1057,7 @@
                         <li class="nav-item">
                             <a href="{{ route('designation') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                 <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                <p>Designation</p>
+                                <p>উপাধি</p>
                             </a>
                         </li>
                     @endcan
@@ -985,7 +1070,7 @@
                         <li class="nav-item">
                             <a href="{{ route('employee.all') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                 <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                <p>Employee</p>
+                                <p>কর্মচারী</p>
                             </a>
                         </li>
                     @endcan
@@ -1011,7 +1096,7 @@
                         <li class="nav-item">
                             <a href="{{route('employee.attendance')}}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                 <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                <p>Employee Attendance</p>
+                                <p>কর্মচারী উপস্থিতি</p>
                             </a>
                         </li>
                     @endcan
@@ -1031,7 +1116,7 @@
                         <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-list"></i>
                             <p>
-                                Payroll
+                                বেতন
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -1045,7 +1130,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('payroll.salary_update.index') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                     <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                    <p>Salary Update</p>
+                                    <p>বেতন আপডেট</p>
                                 </a>
                             </li>
                         @endcan
@@ -1058,7 +1143,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('payroll.salary_process.index') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                     <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                    <p>Salary Process</p>
+                                    <p>বেতন প্রক্রিয়া</p>
                                 </a>
                             </li>
                         @endcan
@@ -1071,7 +1156,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('payroll.leave.index') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                     <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                    <p>Leave</p>
+                                    <p>ছুটি</p>
                                 </a>
                             </li>
                         @endcan
@@ -1084,14 +1169,14 @@
                             <li class="nav-item">
                                 <a href="{{ route('payroll.holiday.index') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                     <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                    <p>Holiday</p>
+                                    <p>হলিডে</p>
                                 </a>
                             </li>
                         @endcan
                     </ul>
                 </li>
                 @endcan
-                
+
                     <?php
                     $subMenu = [
                         'supplier', 'supplier.add', 'supplier.edit', 'product_item', 'product_item.add',
@@ -1116,7 +1201,7 @@
                             <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-list"></i>
                                 <p>
-                                    Purchase
+                                    ক্রয়
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -1130,7 +1215,7 @@
                                     <li class="nav-item">
                                         <a href="{{route('supplier')}}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                             <i class="far  {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Supplier</p>
+                                            <p>সাপ্লাইয়ার</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1170,7 +1255,7 @@
                                     <li class="nav-item">
                                         <a href="{{route('product_category')}}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                             <i class="far  {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Product Size</p>
+                                            <p>পণ্যের সাইজ</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1183,7 +1268,7 @@
                                     <li class="nav-item">
                                         <a href="{{route('product_item')}}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                             <i class="far  {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Product Model</p>
+                                            <p>পণ্যের মডেল</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1196,7 +1281,7 @@
                                     <li class="nav-item">
                                         <a href="{{route('purchase_order.create')}}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                             <i class="far  {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Purchase</p>
+                                            <p>ক্রয়</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1210,7 +1295,7 @@
                                     <li class="nav-item">
                                         <a href="{{route('purchase_receipt.all')}}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                             <i class="far  {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Receipt</p>
+                                            <p>ক্রয় রিসিপ্ট</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1236,7 +1321,7 @@
                                     <li class="nav-item">
                                         <a href="{{route('supplier_payment.all')}}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                             <i class="far  {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Supplier Payment</p>
+                                            <p>সাপ্লাইয়ার পেমেন্ট</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1264,7 +1349,7 @@
                                     <li class="nav-item">
                                         <a href="{{route('purchase_inventory.all')}}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                             <i class="far  {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Stock</p>
+                                            <p>স্টক পণ্য</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1316,7 +1401,7 @@
                             <a href="#" class="nav-link @if(request()->get('type')) {{ in_array(Route::currentRouteName(), $subMenu) && request()->get('type')=='retail_sale' ? 'active' : '' }} @else {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }} @endif">
                                 <i class="nav-icon fas fa-list"></i>
                                 <p>
-                                    Retail Sale
+                                    খুচরা বিক্রয়
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -1330,7 +1415,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('customer',['type'=>'retail_sale']) }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) && request()->get('type')=='retail_sale' ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) && request()->get('type')=='retail_sale' ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Customer</p>
+                                            <p>ক্রেতা</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1343,7 +1428,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('retail_sale_order_create') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Sales </p>
+                                            <p>বিক্রয় </p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1358,7 +1443,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('sale_receipt.customer.all',['type'=>'retail_sale']) }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) && request()->get('type')=='retail_sale' ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) && request()->get('type')=='retail_sale' ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Sales Receipt</p>
+                                            <p>বিক্রয় রিসিপ্ট</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1385,7 +1470,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('client_payment.customer.all',['type'=>'retail_sale']) }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) && request()->get('type')=='retail_sale' ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) && request()->get('type')=='retail_sale' ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Customer Payment</p>
+                                            <p>কাস্টমার পেমেন্ট</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1436,7 +1521,7 @@
                             <a href="#" class="nav-link @if(request()->get('type')) {{ in_array(Route::currentRouteName(), $subMenu) && request()->get('type')=='whole_sale' ? 'active' : '' }} @else {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }} @endif">
                                 <i class="nav-icon fas fa-list"></i>
                                 <p>
-                                    WholeSale
+                                    পাইকারি বিক্রয়
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -1451,7 +1536,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('customer',['type'=>'whole_sale']) }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) && request()->get('type')=='whole_sale' ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) && request()->get('type')=='whole_sale' ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Customer</p>
+                                            <p>ক্রেতা</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1464,7 +1549,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('whole_sale_order_create') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Sale </p>
+                                            <p>বিক্রয় </p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1479,7 +1564,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('sale_receipt.customer.all',['type'=>'whole_sale']) }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) && request()->get('type')=='whole_sale' ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) && request()->get('type')=='whole_sale' ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Sales Receipt</p>
+                                            <p>বিক্রয় রিসিপ্ট</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1505,7 +1590,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('client_payment.customer.all',['type'=>'whole_sale']) }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) && request()->get('type')=='whole_sale' ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) && request()->get('type')=='whole_sale' ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Customer Payment</p>
+                                            <p>বিক্রয় পেমেন্ট</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1519,7 +1604,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('client_payment.all_pending_check',['type'=>'whole_sale']) }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) && request()->get('type')=='whole_sale' ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) && request()->get('type')=='whole_sale' ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>All Pending Cheque</p>
+                                            <p>সমস্ত পেন্ডিং চেক</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1532,7 +1617,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('client_today_pending_check',['type'=>'whole_sale']) }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) && request()->get('type')=='whole_sale' ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) && request()->get('type')=='whole_sale' ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Today Pending Cheque</p>
+                                            <p>আজকের পেন্ডিং চেক</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1546,7 +1631,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('client_payment.all_pending_cash',['type'=>'whole_sale']) }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) && request()->get('type')=='whole_sale' ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) && request()->get('type')=='whole_sale' ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>All Pending Cash</p>
+                                            <p>সমস্ত পেন্ডিং ক্যাশ</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1559,7 +1644,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('client_today_pending_cash',['type'=>'whole_sale']) }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) && request()->get('type')=='whole_sale' ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) && request()->get('type')=='whole_sale' ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Today Pending Cash</p>
+                                            <p>আজকের পেন্ডিং ক্যাশ</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1625,7 +1710,7 @@
                             <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-columns"></i>
                                 <p>
-                                    Accounts
+                                    একাউন্ট
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -1639,7 +1724,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('account_head.type') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Account Head Type</p>
+                                            <p>একাউন্ট হেড টাইপ</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1665,7 +1750,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('transaction.all') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Transaction</p>
+                                            <p>লেনদেন</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -1703,7 +1788,7 @@
                             <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), $menu) ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-columns"></i>
                                 <p>
-                                    Report
+                                    রিপোর্ট
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -1717,7 +1802,7 @@
                                     <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }}">
                                         <i class="nav-icon fas fa-mail-bulk"></i>
                                         <p>
-                                            Stock Report
+                                            স্টক রিপোর্ট
                                             <i class="right fas fa-angle-left"></i>
                                         </p>
                                     </a>
@@ -1730,7 +1815,7 @@
                                         <li class="nav-item">
                                             <a href="{{ route('report_item_wise_stock') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                                 <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                                <p>Item Wise Stock</p>
+                                                <p>আইটেম ওয়াইজ রিপোর্ট</p>
                                             </a>
                                         </li>
                                         <?php
@@ -1741,7 +1826,7 @@
                                         <li class="nav-item">
                                             <a href="{{ route('report_company_wise_stock') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                                 <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                                <p>Company Wise Stock</p>
+                                                <p>কোম্পানি ওয়াইজ রিপোর্ট</p>
                                             </a>
                                         </li>
                                         <?php
@@ -1752,7 +1837,7 @@
                                         <li class="nav-item">
                                             <a href="{{ route('report_total_stock') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                                 <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                                <p>Total Stock</p>
+                                                <p>মোট স্টক </p>
                                             </a>
                                         </li>
                                         <?php
@@ -1764,7 +1849,7 @@
                                             <li class="nav-item">
                                                 <a href="{{ route('report.product_in_out') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                                     <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                                    <p>Product in Out Report</p>
+                                                    <p>পণ্য ইন আউট রিপোর্ট</p>
                                                 </a>
                                             </li>
                                         @endcan
@@ -1779,7 +1864,7 @@
                                     <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }}">
                                         <i class="nav-icon fas fa-mail-bulk"></i>
                                         <p>
-                                            Sale Report
+                                            বিক্রয় রিপোর্ট
                                             <i class="right fas fa-angle-left"></i>
                                         </p>
                                     </a>
@@ -1792,7 +1877,7 @@
                                         <li class="nav-item">
                                             <a href="{{ route('report_product_wise_sale') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                                 <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                                <p>Product Wise Sale Report</p>
+                                                <p>পণ্য ওয়াইজ বিক্রয় রিপোর্ট</p>
                                             </a>
                                         </li>
                                         <?php
@@ -1803,7 +1888,7 @@
                                         <li class="nav-item">
                                             <a href="{{ route('report_total_sale') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                                 <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                                <p>Total Sale Report</p>
+                                                <p>মোট বিক্রয় রিপোর্ট</p>
                                             </a>
                                         </li>
                                         <?php
@@ -1814,7 +1899,7 @@
                                         <li class="nav-item">
                                             <a href="{{ route('report_party_wise_sale') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                                 <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                                <p>Party Wise Sale Report</p>
+                                                <p>পার্টি ওয়াইজ বিক্রয় রিপোর্ট</p>
                                             </a>
                                         </li>
                                         <?php
@@ -1826,7 +1911,7 @@
                                             <li class="nav-item">
                                                 <a href="{{ route('report.client_statement') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                                     <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                                    <p>Client Report</p>
+                                                    <p>পার্টি রিপোর্ট</p>
                                                 </a>
                                             </li>
                                         @endcan
@@ -1839,7 +1924,7 @@
                                             <li class="nav-item">
                                                 <a href="{{ route('report.party_ledger') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                                     <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                                    <p>Party Ledger</p>
+                                                    <p>পার্টি লেজার</p>
                                                 </a>
                                             </li>
                                         @endcan
@@ -1851,7 +1936,7 @@
                                         <li class="nav-item">
                                             <a href="{{ route('party_less_report') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                                 <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                                <p>Discount Report</p>
+                                                <p>ডিসকাউন্ট রিপোর্ট</p>
                                             </a>
                                         </li>
 
@@ -1866,7 +1951,7 @@
                                     <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }}">
                                         <i class="nav-icon fas fa-mail-bulk"></i>
                                         <p>
-                                            Purchase Report
+                                            ক্রয় রিপোর্ট
                                             <i class="right fas fa-angle-left"></i>
                                         </p>
                                     </a>
@@ -1879,7 +1964,7 @@
                                         <li class="nav-item">
                                             <a href="{{ route('report_purchase') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                                 <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                                <p>Purchase Report</p>
+                                                <p>ক্রয় রিপোর্ট</p>
                                             </a>
                                         </li>
                                         <?php
@@ -1890,7 +1975,7 @@
                                         <li class="nav-item">
                                             <a href="{{ route('report.supplier_ledger') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                                 <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                                <p>Supplier Ledger</p>
+                                                <p>সাপ্লাইয়ার লেজার</p>
                                             </a>
                                         </li>
 
@@ -2170,7 +2255,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('report.transaction') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Transaction Report</p>
+                                            <p>লেনদেন রিপোর্ট</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -2183,7 +2268,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('report.cashbook') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Cashbook</p>
+                                            <p>ক্যাশবুক</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -2196,7 +2281,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('report.profit_and_loss') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Profit & Loss</p>
+                                            <p>লাভ & লস</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -2209,7 +2294,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('report.daily') }}" class="nav-link {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                             <i class="far {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle' : 'fa-circle' }} nav-icon"></i>
-                                            <p>Daily Report</p>
+                                            <p>দৈনিক রিপোর্ট</p>
                                         </a>
                                     </li>
                                 @endcan

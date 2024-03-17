@@ -49,7 +49,7 @@ class PurchaseController extends Controller
             'warehouses', 'productItems','product_colors','product_sizes','product_categories','banks'));
     }
 
-    public function purchaseOrderPost(Request $request) {
+   public function purchaseOrderPost(Request $request) {
 
         $rules = [
             'supplier_id' => 'required',

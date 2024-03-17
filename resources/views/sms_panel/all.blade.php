@@ -14,7 +14,7 @@
 @endsection
 
 @section('title')
-    Sms
+    এস এম এস
 @endsection
 
 @section('content')
@@ -24,7 +24,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header with-border">
-                        <h3 class="card-title">Sms Panel Information</h3>
+                        <h3 class="card-title">এস এম এস প্যানেল তথ্য</h3>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -46,10 +46,10 @@
 {{--                            @endif--}}
                             <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('customer') ? 'has-error' :'' }}">
-                                    <label>Customer</label>
+                                    <label>কাস্টমার</label>
                                     <select required class="form-control customer select2" style="width: 100%;" name="customer">
-                                        <option value="0" {{ old('customer')==0?'selected':'' }}>All Customer</option>
-                                        <option value="1" {{ old('customer')==1?'selected':'' }}>Single Customer</option>
+                                        <option value="0" {{ old('customer')==0?'selected':'' }}>সকল কাস্টমার</option>
+                                        <option value="1" {{ old('customer')==1?'selected':'' }}>একজন কাস্টমার</option>
                                     </select>
                                     @error('customer')
                                     <span class="help-block">{{ $message }}</span>
@@ -58,8 +58,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group {{ $errors->has('message') ? 'has-error' :'' }}">
-                                    <label>Message</label>
-                                    <textarea class="form-control" name="message">{{ old('message') }}</textarea>
+                                    <label>মেসেজ</label>
+                                    <textarea class="form-control" rows=""  name="message">{{ old('message') }}</textarea>
                                     @error('message')
                                         <span class="help-block">{{ $message }}</span>
                                     @enderror
@@ -75,7 +75,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header with-border">
-                        <h3 class="card-title">Customer Number Search</h3>
+                        <h3 class="card-title">কাস্টমার নাম্বার খুজুন</h3>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
@@ -93,7 +93,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header with-border">
-                        <h3 class="card-title">Numbers</h3>
+                        <h3 class="card-title">নাম্বার</h3>
                         @error('mobile_numbers')
                             <span class="text-right">{{ $message }}</span>
                         @enderror
@@ -104,7 +104,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary submission ">Save</button>
+                        <button type="submit" class="btn btn-primary submission ">সেভ</button>
                     </div>
                 </div>
             </div>

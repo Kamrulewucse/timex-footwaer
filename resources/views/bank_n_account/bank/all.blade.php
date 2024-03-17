@@ -6,7 +6,7 @@
 @endsection
 
 @section('title')
-    Bank
+    ব্যাংক
 @endsection
 
 @section('content')
@@ -21,16 +21,16 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <a class="btn btn-primary" href="{{ route('bank.add') }}">Add Bank</a>
+                    <a class="btn btn-primary" href="{{ route('bank.add') }}">ব্যাংক যুক্ত করুন</a>
 
                     <hr>
 
                     <table id="table" class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>নাম</th>
+                            <th>স্ট্যাটাস</th>
+                            <th>একশন</th>
                         </tr>
                         </thead>
 
@@ -40,13 +40,13 @@
                                 <td>{{ $bank->name }}</td>
                                 <td>
                                     @if ($bank->status == 1)
-                                        <span class="badge badge-success">Active</span>
+                                        <span class="badge badge-success">সক্রিয়</span>
                                     @else
-                                        <span class="badge badge-danger">Inactive</span>
+                                        <span class="badge badge-danger">নিষ্ক্রিয়</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <a class="btn btn-info btn-sm" href="{{ route('bank.edit', ['bank' => $bank->id]) }}">Edit</a>
+                                    <a class="btn btn-info btn-sm" href="{{ route('bank.edit', ['bank' => $bank->id]) }}">এডিট</a>
                                 </td>
                             </tr>
                         @endforeach

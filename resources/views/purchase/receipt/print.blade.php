@@ -21,8 +21,8 @@
             <h6 style="margin-bottom: 0px;">Megha trading, 174, Siddik bazar Dhaka - 1000</h6>
             <h6 style="margin-bottom: 0px;">Hotline: 01841509263 Phone: 02226638333, 01720009263</h6>
             <h6 style="margin-bottom: 0px;">Bin No: 001067154-0205</h6>
-            <h5 style="margin-bottom: 0px;margin-top: 0px;padding: 0">Product Wise Sale @if(request()->get('start')), Date:
-                {{ date('d-m-Y',strtotime(request()->get('start'))) }} to {{ date('d-m-Y',strtotime(request()->get('end'))) }} @endif</h5>
+{{--            <h5 style="margin-bottom: 0px;margin-top: 0px;padding: 0">Product Wise Sale @if(request()->get('start')), Date:--}}
+{{--                {{ date('d-m-Y',strtotime(request()->get('start'))) }} to {{ date('d-m-Y',strtotime(request()->get('end'))) }} @endif</h5>--}}
         </div>
     </div>
     <div class="row">

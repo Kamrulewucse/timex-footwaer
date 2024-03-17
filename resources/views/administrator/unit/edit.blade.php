@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Unit Edit
+একক এডিট
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header with-border">
-                    <h3 class="card-title">Unit Information</h3>
+                    <h3 class="card-title">একক তথ্য</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
@@ -18,7 +18,7 @@
 
                     <div class="card-body">
                         <div class="form-group row {{ $errors->has('name') ? 'has-error' :'' }}">
-                            <label class="col-sm-2 col-form-label">Name *</label>
+                            <label class="col-sm-2 col-form-label">নাম *</label>
 
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" placeholder="Enter Name"
@@ -32,7 +32,7 @@
 
 
                         <div class="form-group row {{ $errors->has('status') ? 'has-error' :'' }}">
-                            <label class="col-sm-2 col-form-label">Status *</label>
+                            <label class="col-sm-2 col-form-label">স্ট্যাটাস *</label>
 
                             <div class="col-sm-10">
 
@@ -40,7 +40,7 @@
                                     <label>
                                         <input type="radio" name="status" value="1" {{ empty(old('status')) ? ($errors->has('status') ? '' : ($unit->status == '1' ? 'checked' : '')) :
                                             (old('status') == '1' ? 'checked' : '') }}>
-                                        Active
+                                        সক্রিয়
                                     </label>
                                 </div>
 
@@ -48,7 +48,7 @@
                                     <label>
                                         <input type="radio" name="status" value="0" {{ empty(old('status')) ? ($errors->has('status') ? '' : ($unit->status == '0' ? 'checked' : '')) :
                                             (old('status') == '0' ? 'checked' : '') }}>
-                                        Inactive
+                                        নিষ্ক্রিয়
                                     </label>
                                 </div>
 
@@ -61,7 +61,7 @@
                     <!-- /.box-body -->
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary">সেভ</button>
                     </div>
                 </form>
             </div>
